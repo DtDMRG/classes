@@ -132,7 +132,8 @@ source/matarray.d: ../source/matarray.cpp ../source/Eigen/Dense \
  ../source/Eigen/src/Eigenvalues/RealQZ.h \
  ../source/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h \
  ../source/Eigen/src/Eigenvalues/./RealQZ.h \
- ../source/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h
+ ../source/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h \
+ ../source/Eigen/SVD
 
 ../source/Eigen/Dense:
 
@@ -443,3 +444,5 @@ source/matarray.d: ../source/matarray.cpp ../source/Eigen/Dense \
 ../source/Eigen/src/Eigenvalues/./RealQZ.h:
 
 ../source/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h:
+
+../source/Eigen/SVD:
