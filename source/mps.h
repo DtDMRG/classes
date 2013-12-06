@@ -9,6 +9,16 @@
 #define MPS_H_
 
 
+#include "Eigen/Dense"
+#include "Eigen/SVD"
+/* selected definitions from std*/
+#define complex std::complex<double>
+
+
+using namespace Eigen;
+
+
+
 /*
 This is the type definition of a matrix of complex entries.
 Must be defined on a separate file.
@@ -17,13 +27,23 @@ typedef Matrix<complex, Dynamic, Dynamic> MatrixXc;
 
 
 class Mps {
+
+
+	//Private members
+	int n_sites, hilbert_dim;
+
+
+
+	//private functions
+	void sweep_from_Left_at(int); //Perform an SVD and then change the matrix at site and also pass the residue to site plus 1
+	void sweep_from_right_at(int); //*
+	void trunc_sweep_from_Left_at(int,int); //Perform an SVD and then change the matrix at site and also pass the residue to site plus 1
+	void trunc_sweep_from_right_at(int,int); //*
+
 public:
 
-	//Propeties
-	int n_sites, hilbert_dim;
-	int stored_matrix_dimensions[n_sites+1];
-	MatrixXc stored_mps[n_sites];
-
+	int stored_matrix_dimensions[];
+	MatrixXc stored_mps[];
 
 	//Constructor, Destructor
 	Mps(int, int);
@@ -43,11 +63,6 @@ public:
 	void make_right_canonical(); //Make the matrix
 	void compress(int);
 
-private:
-	void sweep_from_Left_at(int); //Perform an SVD and then change the matrix at site and also pass the residue to site plus 1
-	void sweep_from_right_at(int); //*
-	void trunc_sweep_from_Left_at(int,int); //Perform an SVD and then change the matrix at site and also pass the residue to site plus 1
-	void trunc_sweep_from_right_at(int,int); //*
 };
 
 #endif /* MPS_H_ */
