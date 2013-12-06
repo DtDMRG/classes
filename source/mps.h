@@ -23,7 +23,7 @@ using namespace Eigen;
 This is the type definition of a matrix of complex entries.
 Must be defined on a separate file.
 */
-typedef Matrix<complex, Dynamic, Dynamic> MatrixXc;
+typedef Matrix<complex, Dynamic, Dynamic> CanonMat;
 
 
 class Mps {
@@ -39,11 +39,10 @@ class Mps {
 	void trunc_sweep_from_Left_at(int,int); //Perform an SVD and then change the matrix at site and also pass the residue to site plus 1
 	void trunc_sweep_from_right_at(int,int); //*
 
-public:
-
 	int* stored_matrix_dimensions;
-	MatrixXc* stored_mps;
+	CanonMat* stored_mps;
 
+public:
 
 
 	//Constructor, Destructor
