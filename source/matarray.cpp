@@ -93,7 +93,7 @@ int main(void) {
 
 	cout<< "We can easily to SVD too:" << endl;
 	JacobiSVD<Matrix<typeword, Dynamic, Dynamic> > svd(M, ComputeThinU | ComputeThinV);
-	cout << "The singular values are" << endl << svd.singularValues() << endl << endl;
+	//cout << "The singular values are" << endl << svd.singularValues() << endl << endl;
 	cout << "This U matrix will be pointed to by eg. A^{sigma=1}" << endl << svd.matrixU() << endl<< endl;
 	cout << "This V will go on to make the next M^{sigma=2}" << endl << svd.matrixV() << endl;
 
