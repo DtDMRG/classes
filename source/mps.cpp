@@ -6,7 +6,7 @@
  */
 
 #include "mps.h"
-
+#define complex std::complex<double>
 
 
 
@@ -24,10 +24,13 @@ Mps::Mps(int ns, int db) {
 
     //Define the column matrix of the down state
 	MatrixXc M(db,1);
-    for (int i=0;i<db-1;i++){M(i,1)=(0.,0.);}
-    M(db-1,1)=(1.,0.);
+    for (int i=0;i<db-1;i++){M(i,1)=complex(0.,0.);}
+    M(db-1,1)=1.0;
 
 
+    //Resize the arrays to the right size
+    stored_matrix_dimensions= new int[ns+1];
+    stored_mps = new MatrixXc[ns];
 
 
     //Initialize the dimensions vector to one for each site

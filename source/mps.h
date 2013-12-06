@@ -42,8 +42,9 @@ class Mps {
 
 public:
 
-	int stored_matrix_dimensions[];
-	MatrixXc stored_mps[];
+	int* stored_matrix_dimensions;
+	MatrixXc* stored_mps;
+
 
 	//Constructor, Destructor
 	Mps(int, int);
