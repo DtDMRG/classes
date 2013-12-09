@@ -74,6 +74,9 @@ int main(void) {
 	int Nsigmai = Ni * Nsigma; //Canonical i dimension
 	typedef complex typeword;  //type for all matrices/arrays
 
+	Matrix<typeword, Dynamic, Dynamic>* objarray;
+
+	objarray = new Matrix<typeword, Dynamic, Dynamic>[2];
 
 	Matrix<typeword, Dynamic, Dynamic> M(Nsigmai, Nj), N(Nsigmai, Nj);
 	for (int k = 0; k < Nsigma; k++) {
@@ -83,12 +86,18 @@ int main(void) {
 	Matrix<typeword, Dynamic, Dynamic> P(Ni, Ni);
 	P = 2 * Matrix<typeword, Dynamic, Dynamic>::Identity(Ni, Ni);
 
+
+	//Perform copies to array of objects
+	objarray[0] = M;
+	objarray[1] = P;
+
+
 	cout<< "This is an example of an M matrix (stack of Nsigma ="<<Nsigma<< "matrices)"<<endl;
-	cout<< M << endl;
+	cout<< objarray[0] << endl;
 	cout<< endl;
 
 	cout<< "This is a sample SV to be multiplied in canonical form"<<endl;
-	cout<< P << endl;
+	cout<< objarray[1] << endl;
 	cout<< endl;
 
 	cout<< "We call a canonical matrix multiplication without copying:" << endl;
@@ -97,9 +106,12 @@ int main(void) {
 
 	cout<< "We can easily to SVD too:" << endl;
 	JacobiSVD<Matrix<typeword, Dynamic, Dynamic> > svd(M, ComputeThinU | ComputeThinV);
-	//cout << "The singular values are" << endl << svd.singularValues() << endl << endl;
+	cout << "The singular values are" << endl << svd.singularValues() << endl << endl;
 	cout << "This U matrix will be pointed to by eg. A^{sigma=1}" << endl << svd.matrixU() << endl<< endl;
 	cout << "This V will go on to make the next M^{sigma=2}" << endl << svd.matrixV() << endl;
+
+	cout << "rank is:" << endl;
+	cout << svd.nonzeroSingularValues() << endl;
 
 
 
