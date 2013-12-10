@@ -33,6 +33,7 @@ Mps::Mps(int ns, int db) {
     stored_mps = new MatrixXc[ns];
 
 
+
     //Initialize the dimensions vector to one for each site
 	for (int i=0;i<ns;i++){
 		stored_matrix_dimensions[i]=1;
