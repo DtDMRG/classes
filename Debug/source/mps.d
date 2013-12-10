@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-source/mps.d source/mps.o: ../source/mps.cpp ../source/mps.h \
- ../source/Eigen/Dense ../source/Eigen/Core \
-=======
 source/mps.d: ../source/mps.cpp ../source/mps.h ../source/Eigen/Dense \
  ../source/Eigen/Core \
->>>>>>> branch 'master' of https://github.com/DtDMRG/classes.git
  ../source/Eigen/src/Core/util/DisableStupidWarnings.h \
  ../source/Eigen/src/Core/util/Macros.h \
  ../source/Eigen/src/Core/util/MKL_support.h \

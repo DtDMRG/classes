@@ -53,13 +53,13 @@ DerivedB canonmult(const MatrixBase<DerivedA>& SV,
 /* A mockup of the *TYPE* of thing we need to do taking canonical
  * matrices and then SVDing and re-pointing
  */
-template<typename DerivedA, typename DerivedB>
-void svdmult(const MatrixBase<DerivedA>& M1,const MatrixBase<DerivedB>& M2) {
+template<typename Derived>
+void svdmult(const MatrixBase<Derived>& M1, const MatrixBase<Derived>& M2) {
 
-	JacobiSVD<DerivedA> svd(M1, ComputeThinU | ComputeThinV);
+	JacobiSVD<Derived> svd(M1, ComputeThinU | ComputeThinV);
 
-	//const_cast<DerivedA&> (&M1) = &svd.matrixU();
-	//M2 = svd.matrixV();
+	const_cast<MatrixBase<Derived>&> (M1) = svd.matrixU();
+	const_cast<MatrixBase<Derived>&> (M2) = svd.matrixV();
 
 }
 
@@ -93,11 +93,14 @@ int main(void) {
 	objarray[1] = &P;
 
 	//Now we'll deal with only the pointers as far as possible
-	cout<< "This is an example of an M matrix (stack of Nsigma ="<<Nsigma<< "matrices)"<<endl;
+	cout<< "This is an example of an M matrix (stack of Nsigma ="<<Nsigma << " matrices)"<<endl;
+	cout<< "It is the deference of the first element of an array of pointers"<<endl;
+	cout<< "*objarray[0] ="<<endl;
 	cout<< *objarray[0] << endl;
 	cout<< endl;
 
 	cout<< "This is a sample SV to be multiplied in canonical form"<<endl;
+	cout<< "*objarray[1] ="<<endl;
 	cout<< *objarray[1] << endl;
 	cout<< endl;
 
@@ -105,21 +108,20 @@ int main(void) {
 	N = canonmult(*objarray[1], *objarray[0], Nsigma);
 	cout<< N << endl<< endl;
 
-	cout<< "We can easily to SVD too:" << endl;
-	JacobiSVD<Matrix<typeword, Dynamic, Dynamic> > svd(*objarray[0], ComputeThinU | ComputeThinV);
-	objarray[0] = &svd.matrixU();
 
-	cout << "The singular values are" << endl << svd.singularValues() << endl << endl;
-
-	objarray[0] = &svd.matrixU();
-	objarray[1] = &svd.matrixV();
-	cout << "This U matrix HAS BEEN pointed to" << endl << *objarray[0] << endl<< endl;
-	cout << "This V matrix similarly:" << endl << *objarray[1] << endl;
+	cout<< "We can easily to SVD too:" << endl<<endl;
 
 	//We will need to do this via function calls and the templates are
 	//the way to do this in Eigen:
-
+	cout<< "This can be done by a function call - *take note* of the syntax"<<endl;
+	cout<< "Now calling svdmult:"<<endl<<endl;
 	svdmult(*objarray[0],*objarray[1]);
+	cout << "This U matrix IS pointed to by objarray[0]" << endl;
+	cout << "*objarray[0] =" << endl;
+	cout<< *objarray[0]<< endl<< endl;
+	cout << "This V matrix IS pointed to by objarray[1]" << endl;
+	cout << "*objarray[1] =" << endl;
+	cout<< *objarray[1]<< endl<<endl;
 
 
 
