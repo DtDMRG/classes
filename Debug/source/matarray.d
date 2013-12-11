@@ -1,5 +1,5 @@
-source/matarray.d: ../source/matarray.cpp ../source/Eigen/Dense \
-  ../source/Eigen/Core \
+source/matarray.d source/matarray.o: ../source/matarray.cpp \
+  ../source/Eigen/Dense ../source/Eigen/Core \
   ../source/Eigen/src/Core/util/DisableStupidWarnings.h \
   ../source/Eigen/src/Core/util/Macros.h \
   ../source/Eigen/src/Core/util/MKL_support.h \
@@ -79,8 +79,7 @@ source/matarray.d: ../source/matarray.cpp ../source/Eigen/Dense \
   ../source/Eigen/src/Core/Select.h \
   ../source/Eigen/src/Core/VectorwiseOp.h \
   ../source/Eigen/src/Core/Random.h ../source/Eigen/src/Core/Replicate.h \
-  ../source/Eigen/src/Core/Reverse.h \
-  ../source/Eigen/src/Core/ArrayBase.h \
+  ../source/Eigen/src/Core/Reverse.h ../source/Eigen/src/Core/ArrayBase.h \
   ../source/Eigen/src/Core/../plugins/ArrayCwiseUnaryOps.h \
   ../source/Eigen/src/Core/../plugins/ArrayCwiseBinaryOps.h \
   ../source/Eigen/src/Core/ArrayWrapper.h \
@@ -123,13 +122,19 @@ source/matarray.d: ../source/matarray.cpp ../source/Eigen/Dense \
   ../source/Eigen/src/Eigenvalues/RealSchur.h \
   ../source/Eigen/src/Eigenvalues/./HessenbergDecomposition.h \
   ../source/Eigen/src/Eigenvalues/EigenSolver.h \
+  ../source/Eigen/src/Eigenvalues/./RealSchur.h \
   ../source/Eigen/src/Eigenvalues/SelfAdjointEigenSolver.h \
+  ../source/Eigen/src/Eigenvalues/./Tridiagonalization.h \
   ../source/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h \
+  ../source/Eigen/src/Eigenvalues/HessenbergDecomposition.h \
   ../source/Eigen/src/Eigenvalues/ComplexSchur.h \
   ../source/Eigen/src/Eigenvalues/ComplexEigenSolver.h \
+  ../source/Eigen/src/Eigenvalues/./ComplexSchur.h \
   ../source/Eigen/src/Eigenvalues/RealQZ.h \
   ../source/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h \
-  ../source/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h
+  ../source/Eigen/src/Eigenvalues/./RealQZ.h \
+  ../source/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h \
+  ../source/Eigen/SVD ../source/matrixdefs.h ../source/mps.h
 
 ../source/Eigen/Dense:
 
@@ -417,16 +422,32 @@ source/matarray.d: ../source/matarray.cpp ../source/Eigen/Dense \
 
 ../source/Eigen/src/Eigenvalues/EigenSolver.h:
 
+../source/Eigen/src/Eigenvalues/./RealSchur.h:
+
 ../source/Eigen/src/Eigenvalues/SelfAdjointEigenSolver.h:
 
+../source/Eigen/src/Eigenvalues/./Tridiagonalization.h:
+
 ../source/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h:
+
+../source/Eigen/src/Eigenvalues/HessenbergDecomposition.h:
 
 ../source/Eigen/src/Eigenvalues/ComplexSchur.h:
 
 ../source/Eigen/src/Eigenvalues/ComplexEigenSolver.h:
 
+../source/Eigen/src/Eigenvalues/./ComplexSchur.h:
+
 ../source/Eigen/src/Eigenvalues/RealQZ.h:
 
 ../source/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h:
 
+../source/Eigen/src/Eigenvalues/./RealQZ.h:
+
 ../source/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h:
+
+../source/Eigen/SVD:
+
+../source/matrixdefs.h:
+
+../source/mps.h:

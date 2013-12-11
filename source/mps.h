@@ -11,6 +11,7 @@
 
 #include "Eigen/Dense"
 #include "Eigen/SVD"
+#include "matrixdefs.h"
 /* selected definitions from std*/
 #define complex std::complex<double>
 
@@ -23,35 +24,36 @@ using namespace Eigen;
 This is the type definition of a matrix of complex entries.
 Must be defined on a separate file.
 */
-typedef Matrix<complex, Dynamic, Dynamic> MatrixXc;
+typedef Matrix<complex, Dynamic, Dynamic> CanonMat;
 
 
 class Mps {
 
 
+public:
 	//Private members
 	int n_sites, hilbert_dim;
+	CanonMat init;
 
 
 
-	//private functions
-	void sweep_from_Left_at(int); //Perform an SVD and then change the matrix at site and also pass the residue to site plus 1
+	//private function
+	void sweep_from_left_at(int, const CanonMat** &); //Perform an SVD and then change the matrix at site and also pass the residue to site plus 1
 	void sweep_from_right_at(int); //*
-	void trunc_sweep_from_Left_at(int,int); //Perform an SVD and then change the matrix at site and also pass the residue to site plus 1
+	void trunc_sweep_from_left_at(int,int); //Perform an SVD and then change the matrix at site and also pass the residue to site plus 1
 	void trunc_sweep_from_right_at(int,int); //*
 
 
+
 	int* stored_matrix_dimensions;
-	MatrixXc* stored_mps;
-
-public:
-
+	const CanonMat** mps_pointers;
 
 
 
 	//Constructor, Destructor
+	//Mps(int, int);
 	Mps(int, int);
-	virtual ~Mps();
+	~Mps();
 
 
 	//Some functions for debugging

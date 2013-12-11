@@ -134,7 +134,7 @@ source/mps.d source/mps.o: ../source/mps.cpp ../source/mps.h \
   ../source/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h \
   ../source/Eigen/src/Eigenvalues/./RealQZ.h \
   ../source/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h \
-  ../source/Eigen/SVD
+  ../source/Eigen/SVD ../source/matrixdefs.h
 
 ../source/mps.h:
 
@@ -449,3 +449,5 @@ source/mps.d source/mps.o: ../source/mps.cpp ../source/mps.h \
 ../source/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h:
 
 ../source/Eigen/SVD:
+
+../source/matrixdefs.h:

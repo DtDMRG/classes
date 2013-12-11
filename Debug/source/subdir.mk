@@ -4,13 +4,19 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../source/matarray.cpp 
+../source/matarray.cpp \
+../source/mpo.cpp \
+../source/mps.cpp 
 
 OBJS += \
-./source/matarray.o 
+./source/matarray.o \
+./source/mpo.o \
+./source/mps.o 
 
 CPP_DEPS += \
-./source/matarray.d 
+./source/matarray.d \
+./source/mpo.d \
+./source/mps.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
