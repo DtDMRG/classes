@@ -46,8 +46,8 @@ public:
 
 
 	int* stored_matrix_dimensions;
-	const CanonMat** mps_pointers;
-
+	//const CanonMat** mps_pointers;
+	vector<CanonMat_ptr> mps_pointers;
 
 
 	//Constructor, Destructor

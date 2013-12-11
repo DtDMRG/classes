@@ -13,6 +13,7 @@
 #include "Eigen/Dense"
 #include "Eigen/SVD"
 #include <iostream>
+#include <tr1/memory>
 #include "matrixdefs.h"
 #include "mps.h"
 
@@ -42,7 +43,7 @@ DerivedA transmult(const MatrixBase<DerivedA>& p1,
  * <see Eq.(136) of Schollwoeck>
  */
 
-/*
+
 template<typename DerivedA, typename DerivedB>
 DerivedB canonmult(const MatrixBase<DerivedA>& SV,
 		const MatrixBase<DerivedB>& Min, int Nsigma) {
@@ -56,7 +57,7 @@ DerivedB canonmult(const MatrixBase<DerivedA>& SV,
 
 	return Mout;
 }
-*/
+
 /* A mockup of the *TYPE* of thing we need to do taking canonical
  * matrices and then SVDing and re-pointing
  */
@@ -111,7 +112,7 @@ int main(void) {
 	objarray[1] = &P;
 
 	//Now we'll deal with only the pointers as far as possible
-	/*
+
 	cout<< "This is an example of an M matrix (stack of Nsigma ="<<Nsigma << " matrices)"<<endl;
 	cout<< "It is the deference of the first element of an array of pointers"<<endl;
 	cout<< "*objarray[0] ="<<endl;
@@ -129,7 +130,7 @@ int main(void) {
 
 
 	cout<< "We can easily to SVD too:" << endl<<endl;
-*/
+
 	//We will need to do this via function calls and the templates are
 	//the way to do this in Eigen:
 	/*cout<< "This can be done by a function call - *take note* of the syntax"<<endl;
@@ -141,22 +142,22 @@ int main(void) {
 	cout << "This V matrix IS pointed to by objarray[1]" << endl;
 	cout << "*objarray[1] =" << endl;
 	cout<< *objarray[1]<< endl<<endl;*/
-	Svd KK(M);
+/*	Svd KK(M);
 cout<<KK.singularValues()<<endl<<endl;
 cout<<KK.matrixU()<<endl<<endl;
 cout<<KK.matrixV()<<endl<<endl;
-Mps pp(5,4);
+Mps pp(5,4);*/
 //cout<<pp.stored_matrix_dimensions[0]<<endl;
 //cout<<pp.stored_matrix_dimensions[1]<<endl;
 //cout<<pp.stored_matrix_dimensions[2]<<endl;
 //cout<<pp.stored_matrix_dimensions[3]<<endl;
 //cout<<pp.stored_matrix_dimensions[4]<<endl;
 //cout<<pp.stored_matrix_dimensions[5]<<endl<<endl;
-const CanonMat* MM=pp.mps_pointers[0];
-cout<<*MM<<endl<<endl;
-pp.sweep_from_left_at(0, pp.mps_pointers);
-cout<<pp.mps_pointers[0]<<endl;
+//const CanonMat* MM=pp.mps_pointers[0];
+//cout<<*MM<<endl<<endl;
+//pp.sweep_from_left_at(0, pp.mps_pointers);
+//cout<<pp.mps_pointers[0]<<endl;
 
-cout<<*(pp.mps_pointers[0])<<endl;
+//cout<<*(pp.mps_pointers[0])<<endl;
 //cout<<*MM<<endl;
 }
