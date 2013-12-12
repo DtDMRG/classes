@@ -33,12 +33,25 @@ Mps::Mps(int ns, int db) {
     //Resize the arrays to the right size
     stored_matrix_dimensions= new int[ns+1];
     //mps_pointers = new const CanonMat*[ns];
-    mps_pointers.resize(ns);
+    //mps_pointers.resize(ns);
+    //myVector.push_back(Base_p(new Derived));
 
-    for ( CanonMat_itr it = mps_pointers.begin(); it != mps_pointers.end(); it++ ){
-    //  (*it) = &init;   !!!WHAT GOES IN HERE ----  "it" is a shared pointer!!!
+    //Push back to set a whole load of new Canon_Mat_ptrs of the right size
+    for (int i=0; i<ns; ++i){
+    	mps_pointers.push_back(CanonMat_ptr(new CanonMat(db, 1)) );
     }
 
+    //Deference vector (1star) and deference shared_ptr (second star) to set
+    for ( CanonMat_itr it = mps_pointers.begin(); it != mps_pointers.end(); it++ ){
+    	**it=init;
+    }
+
+    //This is to test it is working here --- TO BE REMOVED
+    for ( CanonMat_itr it = mps_pointers.begin(); it != mps_pointers.end(); it++ ){
+        	//**it=CanonMat::Ones(db,1);
+        	cout<< "allocated CanonMat:"<<endl;
+        	cout<< **it <<endl <<endl;
+    }
 
 
 

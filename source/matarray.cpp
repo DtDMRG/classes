@@ -142,11 +142,11 @@ int main(void) {
 	cout << "This V matrix IS pointed to by objarray[1]" << endl;
 	cout << "*objarray[1] =" << endl;
 	cout<< *objarray[1]<< endl<<endl;*/
-/*	Svd KK(M);
+	Svd KK(M);
 cout<<KK.singularValues()<<endl<<endl;
 cout<<KK.matrixU()<<endl<<endl;
 cout<<KK.matrixV()<<endl<<endl;
-Mps pp(5,4);*/
+Mps pp(5,4);
 //cout<<pp.stored_matrix_dimensions[0]<<endl;
 //cout<<pp.stored_matrix_dimensions[1]<<endl;
 //cout<<pp.stored_matrix_dimensions[2]<<endl;
