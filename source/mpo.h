@@ -8,8 +8,8 @@
 #ifndef MPO_H_
 #define MPO_H_
 
-#include "Eigen/Dense"
-/* selected definitions from std*/
+
+/* selected definitions from std
 #define complex std::complex<double>
 
 
@@ -18,7 +18,7 @@ using namespace Eigen;
 /*
 This is the type definition of a matrix of complex entries.
 Must be defined on a separate file.
-*/
+
 typedef Matrix<complex, Dynamic, Dynamic> CanonMat;
 
 /*
@@ -27,7 +27,7 @@ typedef Matrix<complex, Dynamic, Dynamic> CanonMat;
  * At each site this matrix is a composed of the four indexes
  * two related to the dimension of the hilbert space
  * two related to size of the matrix which can change
- */
+
 class Mpo {
 
 	//Private variables
@@ -41,7 +41,7 @@ public:
 	//Constructors
 	/*
 	 * Create an MPO given first the number of sites then the Hilbert space dimension
-	 */
+
 	Mpo(int, int);
 
 
@@ -56,5 +56,6 @@ public:
 	void validate_MPO(); //Check all the data stored in memory is valid and consistent. For example check that the stored_MPS is consistent with the stored_matrix_dimensions
 
 };
+*/
 
 #endif /* MPS_H_ */

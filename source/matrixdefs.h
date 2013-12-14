@@ -12,9 +12,9 @@
 
 #include "Eigen/Dense"
 #include "Eigen/SVD"
-#include <tr1/memory>
+#include <memory>
 #include <vector>
-#define shared_ptr std::tr1::shared_ptr
+#define shared_ptr std::shared_ptr
 #define vector std::vector
 
 using namespace Eigen;

@@ -10,10 +10,7 @@
  * matrix objects.
  */
 
-#include "Eigen/Dense"
-#include "Eigen/SVD"
 #include <iostream>
-#include <tr1/memory>
 #include "matrixdefs.h"
 #include "mps.h"
 
@@ -126,10 +123,10 @@ int main(void) {
 
 	cout<< "We call a canonical matrix multiplication without copying:" << endl;
 	N = canonmult(*objarray[1], *objarray[0], Nsigma);
-	cout<< N << endl<< endl;
+	cout<< N << endl;
 
 
-	cout<< "We can easily to SVD too:" << endl<<endl;
+	cout<< "We can easily to SVD too:" << endl;
 
 	//We will need to do this via function calls and the templates are
 	//the way to do this in Eigen:
@@ -143,9 +140,9 @@ int main(void) {
 	cout << "*objarray[1] =" << endl;
 	cout<< *objarray[1]<< endl<<endl;*/
 	Svd KK(M);
-cout<<KK.singularValues()<<endl<<endl;
-cout<<KK.matrixU()<<endl<<endl;
-cout<<KK.matrixV()<<endl<<endl;
+	//cout<<KK.singularValues()<<endl;
+	cout<<KK.matrixU()<<endl;
+	cout<<KK.matrixV()<<endl;
 Mps pp(5,4);
 //cout<<pp.stored_matrix_dimensions[0]<<endl;
 //cout<<pp.stored_matrix_dimensions[1]<<endl;

@@ -1,23 +1,8 @@
-/*
- * mps.h
- *
- *  Created on: Dec 5, 2013
- *      Author: emanuelelevi
- */
-
 #ifndef MPS_H_
 #define MPS_H_
 
 
-#include "Eigen/Dense"
-#include "Eigen/SVD"
 #include "matrixdefs.h"
-/* selected definitions from std*/
-#define complex std::complex<double>
-
-
-using namespace Eigen;
-
 
 
 /*
