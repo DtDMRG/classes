@@ -1,8 +1,6 @@
 /*
  * mps.cpp
  *
- *  Created on: Dec 5, 2013
- *      Author: emanuelelevi
  */
 
 #include "mps.h"
@@ -35,6 +33,8 @@ Mps::Mps(int ns, int db) {
     	init(i,0)= complex(double(i),0.);
     }
     init(db-1,0)=1.0;
+
+    CanonMat_itr temp;
 
     //Deference vector (1star) and deference shared_ptr (second star) to set
     for ( CanonMat_itr it = mps_pointers.begin(); it != mps_pointers.end(); it++ ){
