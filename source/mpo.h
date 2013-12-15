@@ -12,9 +12,6 @@
 /* selected definitions from std
 #define complex std::complex<double>
 
-
-using namespace Eigen;
-
 /*
 This is the type definition of a matrix of complex entries.
 Must be defined on a separate file.

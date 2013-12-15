@@ -90,7 +90,7 @@ Mps::Mps(QState input_qstate) {
 
 	for (int i=0; i<n_sites;i++) {
 		Svd temp_svd(*current_state_residue);
-		stored_matrix_dimensions[i+1] = temp_svd.rank();
+		//stored_matrix_dimensions[i+1] = temp_svd.rank();
 		//(*stored_matrix_dimensions[1])stored_matrix_dimensions[i+1]
 		//**current_mps_itr = temp_svd.matrixU().conservativeResize(hilbert_dim, hilbert_dim);
 

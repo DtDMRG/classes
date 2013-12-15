@@ -141,8 +141,8 @@ int main(void) {
 	cout<< *objarray[1]<< endl<<endl;*/
 	Svd KK(M);
 	//cout<<KK.singularValues()<<endl;
-	cout<<KK.matrixU()<<endl;
-	cout<<KK.matrixV()<<endl;
+	//cout<<KK.matrixU()<<endl;
+	//cout<<KK.matrixV()<<endl;
 Mps pp(5,4);
 //cout<<pp.stored_matrix_dimensions[0]<<endl;
 //cout<<pp.stored_matrix_dimensions[1]<<endl;
