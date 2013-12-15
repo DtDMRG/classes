@@ -7,19 +7,19 @@ CPP_SRCS += \
 ../source/matarray.cpp \
 ../source/mpo.cpp \
 ../source/mps.cpp \
-../source/state.cpp 
+../source/qstate.cpp 
 
 OBJS += \
 ./source/matarray.o \
 ./source/mpo.o \
 ./source/mps.o \
-./source/state.o 
+./source/qstate.o 
 
 CPP_DEPS += \
 ./source/matarray.d \
 ./source/mpo.d \
 ./source/mps.d \
-./source/state.d 
+./source/qstate.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

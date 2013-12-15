@@ -5,20 +5,12 @@
 #include "matrixdefs.h"
 
 
-/*
-This is the type definition of a matrix of complex entries.
-Must be defined on a separate file.
-*/
-typedef Matrix<complex, Dynamic, Dynamic> CanonMat;
-
-
 class Mps {
 
 
 public:
 	//Private members
 	int n_sites, hilbert_dim;
-	CanonMat init;
 
 
 
@@ -35,9 +27,26 @@ public:
 	vector<CanonMat_ptr> mps_pointers;
 
 
-	//Constructor, Destructor
-	//Mps(int, int);
+	/*
+	 * Constructors
+	 */
+
+	/*
+	 * Default creator, states MPS in all high state
+	 * given the 1 the number of sites
+	 * and 2 the hilbert dimension of each site
+	 */
 	Mps(int, int);
+
+	/*
+	 * Create an MPS from a state
+	 * only requires a QState everything else is simply extracted from that object
+	 */
+	Mps(QState);
+
+	/*
+	 * Destructor NOT IMPLEMENTED!!!
+	 */
 	~Mps();
 
 

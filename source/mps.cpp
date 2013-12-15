@@ -6,9 +6,8 @@
  */
 
 #include "mps.h"
-#include <iostream>
 
-#define complex std::complex<double>
+#include <iostream>
 #define cout std::cout
 #define endl std::endl
 
@@ -26,8 +25,11 @@ Mps::Mps(int ns, int db) {
 	hilbert_dim = db;
 
 	//Define the column matrix of the down state
-	init= CanonMat( db ,1 );
-    for (int i=0;i<db-1;i++){init(i,0)=complex(double(i),0.);}
+	CanonMat init= CanonMat( db ,1 );
+
+    for (int i=0;i<db-1;i++){
+    	init(i,0)= complex(double(i),0.);
+    }
     init(db-1,0)=1.0;
 
 
@@ -65,6 +67,13 @@ Mps::Mps(int ns, int db) {
 
 }
 
+Mps::Mps(QState input_qstate) {
+
+	//Extract and store common variables
+	n_sites = input_qstate.return_n_sites();
+	hilbert_dim = input_qstate.return_hilbert_dim();
+
+}
 
 
 
