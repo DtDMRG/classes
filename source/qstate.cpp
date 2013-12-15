@@ -17,7 +17,9 @@ QState::QState(int ns, int db) {
 	//By default we simple set it to be the 000... state
 
 	//Create state initially filled with Zeros
-	//full_state_dim
+	//CanonMat init_state = CanonMat::Zero( full_state_dim, 1);
+
+
 	CanonMat init_state = CanonMat::Zero( full_state_dim, 1);
 
 	//Set the 00... state to 1.0

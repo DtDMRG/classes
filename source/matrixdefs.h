@@ -8,9 +8,6 @@
 #ifndef MATRIXDEFS_H_
 #define MATRIXDEFS_H_
 
-//Define the index type if needed
-//#define EIGEN_DEFAULT_DENSE_INDEX_TYPE int
-
 #include "Eigen/Dense"
 #include "Eigen/SVD"
 #include <memory>

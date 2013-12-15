@@ -98,10 +98,10 @@ int main(void) {
 	Matrix<typeword, Dynamic, Dynamic> M(Nsigmai, Nj), N(Nsigmai, Nj);
 	for (int k = 0; k < Nsigma; k++) {
 		M.block(Ni * k, 0, Ni, Nj) = (k + 1)
-				* Matrix<typeword, Dynamic, Dynamic>::Ones(Ni, Nj);
+				* Matrix<typeword, Dynamic, Dynamic>::Ones(Nj,Nj);
 	}
 	Matrix<typeword, Dynamic, Dynamic> P(Ni, Ni);
-	P = 2 * Matrix<typeword, Dynamic, Dynamic>::Identity(Ni, Ni);
+	P = 2 * Matrix<typeword, Dynamic, Dynamic>::Identity(Nj,Nj);
 
 
 	//Point array elements to these matrix types now
