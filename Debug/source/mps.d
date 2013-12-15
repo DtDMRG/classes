@@ -16,7 +16,10 @@ source/mps.d: ../source/mps.cpp ../source/mps.h ../source/matrixdefs.h \
   ../source/Eigen/src/Core/arch/SSE/MathFunctions.h \
   ../source/Eigen/src/Core/arch/SSE/Complex.h \
   ../source/Eigen/src/Core/arch/Default/Settings.h \
-  ../source/Eigen/src/Core/Functors.h \
+  ../source/Eigen/src/Core/functors/BinaryFunctors.h \
+  ../source/Eigen/src/Core/functors/UnaryFunctors.h \
+  ../source/Eigen/src/Core/functors/NullaryFunctors.h \
+  ../source/Eigen/src/Core/functors/StlFunctors.h \
   ../source/Eigen/src/Core/DenseCoeffsBase.h \
   ../source/Eigen/src/Core/DenseBase.h \
   ../source/Eigen/src/Core/../plugins/BlockMethods.h \
@@ -26,6 +29,9 @@ source/mps.d: ../source/mps.cpp ../source/mps.h ../source/matrixdefs.h \
   ../source/Eigen/src/Core/../plugins/MatrixCwiseUnaryOps.h \
   ../source/Eigen/src/Core/../plugins/MatrixCwiseBinaryOps.h \
   ../source/Eigen/src/Core/EigenBase.h ../source/Eigen/src/Core/Assign.h \
+  ../source/Eigen/src/Core/ArrayBase.h \
+  ../source/Eigen/src/Core/../plugins/ArrayCwiseUnaryOps.h \
+  ../source/Eigen/src/Core/../plugins/ArrayCwiseBinaryOps.h \
   ../source/Eigen/src/Core/util/BlasUtil.h \
   ../source/Eigen/src/Core/DenseStorage.h \
   ../source/Eigen/src/Core/NestByValue.h \
@@ -80,9 +86,6 @@ source/mps.d: ../source/mps.cpp ../source/mps.h ../source/matrixdefs.h \
   ../source/Eigen/src/Core/VectorwiseOp.h \
   ../source/Eigen/src/Core/Random.h ../source/Eigen/src/Core/Replicate.h \
   ../source/Eigen/src/Core/Reverse.h \
-  ../source/Eigen/src/Core/ArrayBase.h \
-  ../source/Eigen/src/Core/../plugins/ArrayCwiseUnaryOps.h \
-  ../source/Eigen/src/Core/../plugins/ArrayCwiseBinaryOps.h \
   ../source/Eigen/src/Core/ArrayWrapper.h \
   ../source/Eigen/src/Core/GlobalFunctions.h \
   ../source/Eigen/src/Core/util/ReenableStupidWarnings.h \
@@ -172,7 +175,13 @@ source/mps.d: ../source/mps.cpp ../source/mps.h ../source/matrixdefs.h \
 
 ../source/Eigen/src/Core/arch/Default/Settings.h:
 
-../source/Eigen/src/Core/Functors.h:
+../source/Eigen/src/Core/functors/BinaryFunctors.h:
+
+../source/Eigen/src/Core/functors/UnaryFunctors.h:
+
+../source/Eigen/src/Core/functors/NullaryFunctors.h:
+
+../source/Eigen/src/Core/functors/StlFunctors.h:
 
 ../source/Eigen/src/Core/DenseCoeffsBase.h:
 
@@ -193,6 +202,12 @@ source/mps.d: ../source/mps.cpp ../source/mps.h ../source/matrixdefs.h \
 ../source/Eigen/src/Core/EigenBase.h:
 
 ../source/Eigen/src/Core/Assign.h:
+
+../source/Eigen/src/Core/ArrayBase.h:
+
+../source/Eigen/src/Core/../plugins/ArrayCwiseUnaryOps.h:
+
+../source/Eigen/src/Core/../plugins/ArrayCwiseBinaryOps.h:
 
 ../source/Eigen/src/Core/util/BlasUtil.h:
 
@@ -317,12 +332,6 @@ source/mps.d: ../source/mps.cpp ../source/mps.h ../source/matrixdefs.h \
 ../source/Eigen/src/Core/Replicate.h:
 
 ../source/Eigen/src/Core/Reverse.h:
-
-../source/Eigen/src/Core/ArrayBase.h:
-
-../source/Eigen/src/Core/../plugins/ArrayCwiseUnaryOps.h:
-
-../source/Eigen/src/Core/../plugins/ArrayCwiseBinaryOps.h:
 
 ../source/Eigen/src/Core/ArrayWrapper.h:
 

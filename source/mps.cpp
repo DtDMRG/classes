@@ -78,7 +78,7 @@ Mps::Mps(QState input_qstate) {
 	//To start we copy in the whole state stored passed at the input
 	*current_state_residue = input_qstate.return_qstate();
 	//Possible
-	(*current_state_residue).conservativeResize( input_qstate.return_hilbert_dim(), input_qstate.return_full_state_dim()/input_qstate.return_hilbert_dim());
+	//(*current_state_residue).conservativeResize( input_qstate.return_hilbert_dim(), input_qstate.return_full_state_dim()/input_qstate.return_hilbert_dim());
 
 	int last_rank = 1;
 
@@ -90,7 +90,7 @@ Mps::Mps(QState input_qstate) {
 
 	for (int i=0; i<n_sites;i++) {
 		Svd temp_svd(*current_state_residue);
-		stored_matrix_dimensions[i+1] = *temp_svd.rank();
+		stored_matrix_dimensions[i+1] = temp_svd.rank();
 		//(*stored_matrix_dimensions[1])stored_matrix_dimensions[i+1]
 		//**current_mps_itr = temp_svd.matrixU().conservativeResize(hilbert_dim, hilbert_dim);
 
