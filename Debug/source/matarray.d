@@ -130,7 +130,7 @@ source/matarray.d: ../source/matarray.cpp ../source/matrixdefs.h \
   ../source/Eigen/src/Eigenvalues/RealQZ.h \
   ../source/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h \
   ../source/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h \
-  ../source/mps.h
+  ../source/mps.h ../source/qstate.h
 
 ../source/matrixdefs.h:
 
@@ -435,3 +435,5 @@ source/matarray.d: ../source/matarray.cpp ../source/matrixdefs.h \
 ../source/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h:
 
 ../source/mps.h:
+
+../source/qstate.h:

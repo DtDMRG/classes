@@ -129,7 +129,8 @@ source/mps.d: ../source/mps.cpp ../source/mps.h ../source/matrixdefs.h \
   ../source/Eigen/src/Eigenvalues/ComplexEigenSolver.h \
   ../source/Eigen/src/Eigenvalues/RealQZ.h \
   ../source/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h \
-  ../source/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h
+  ../source/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h \
+  ../source/qstate.h
 
 ../source/mps.h:
 
@@ -434,3 +435,5 @@ source/mps.d: ../source/mps.cpp ../source/mps.h ../source/matrixdefs.h \
 ../source/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h:
 
 ../source/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h:
+
+../source/qstate.h:
