@@ -11,8 +11,8 @@
 #include "Eigen/Dense"
 #include "Eigen/SVD"
 
-//Need to check that we are using c++11 if not, we have to get shared pointers from an older reource
-#if __cplusplus<201103L
+//Need to check that we are using c++11 if not, we have to get shared pointers from an older resource
+#if defined(__GXX_EXPERIMENTAL_CXX0X) || __cplusplus >= 201103
 	#include <memory>
 	#define shared_ptr std::shared_ptr
 #else
