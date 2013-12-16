@@ -19,7 +19,7 @@ class QState {
 
 	int n_sites, hilbert_dim, full_state_dim;
 
-	CanonMat_ptr ptr_state;
+	CanonVec_ptr ptr_state;
 
 public:
 
@@ -42,7 +42,7 @@ public:
 
 	int return_full_state_dim();
 
-	CanonMat return_qstate();
+	CanonVec return_qstate();
 
 	/*
 	 * Check data is valid and consistent

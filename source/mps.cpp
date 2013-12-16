@@ -34,12 +34,12 @@ Mps::Mps(int ns, int db) {
     }
     init(db-1,0)=1.0;
 
-    CanonMat_itr temp;
-
     //Deference vector (1star) and deference shared_ptr (second star) to set
+
     for ( CanonMat_itr it = mps_pointers.begin(); it != mps_pointers.end(); it++ ){
     	**it=init;
     }
+
 
     //Initialize the dimensions vector to one for each site
 	for (int i=0;i<n_sites;i++){
@@ -50,10 +50,11 @@ Mps::Mps(int ns, int db) {
 
 	 //This is to test it is working here --- TO BE REMOVED
 	    for ( CanonMat_itr it = mps_pointers.begin(); it != mps_pointers.end(); it++ ){
-	        	//**it=CanonMat::Ones(db,1);
+	        	**it=CanonMat::Ones(db,1);
 	        	cout<< "allocated CanonMat:"<<endl;
 	        	cout<< **it <<endl <<endl;
 	    }
+
 
 }
 
@@ -74,25 +75,33 @@ Mps::Mps(QState input_qstate) {
 	//Variables used for the loop
 
 	//Matrix which we use to store what part of the state hasn't yet formed part of the Mps
-	CanonMat_ptr current_state_residue;
+	CanonVec_ptr current_state_residue;
 	//To start we copy in the whole state stored passed at the input
 	*current_state_residue = input_qstate.return_qstate();
-	//Possible
-	//(*current_state_residue).conservativeResize( input_qstate.return_hilbert_dim(), input_qstate.return_full_state_dim()/input_qstate.return_hilbert_dim());
 
-	int last_rank = 1;
-
-	stored_matrix_dimensions[0] = last_rank;
+	//Store the rank of the first dimention which by definition should be 1
+	stored_matrix_dimensions[0] = 1;
 
 	//Iterator used to access all the pointers I need to get to
 	CanonMat_itr current_mps_itr;
 	current_mps_itr = mps_pointers.begin();
 
 	for (int i=0; i<n_sites;i++) {
-		Svd temp_svd(*current_state_residue);
-		//stored_matrix_dimensions[i+1] = temp_svd.rank();
-		//(*stored_matrix_dimensions[1])stored_matrix_dimensions[i+1]
-		//**current_mps_itr = temp_svd.matrixU().conservativeResize(hilbert_dim, hilbert_dim);
+
+
+
+		JacobiSVD<CanonMat> temp_svd(*current_state_residue, ComputeThinU | ComputeThinV);
+		stored_matrix_dimensions[i+1] = temp_svd.nonzeroSingularValues();
+
+		//THIS TEMPORARY WRITE SHOULD NOT BE NECCESARY NEED A SOLUTION!!!
+		//temp_mat = temp_svd.matrixU();
+
+		**current_mps_itr = temp_svd.matrixU().topLeftCorner(stored_matrix_dimensions[i]*hilbert_dim,stored_matrix_dimensions[i+1]);
+
+		//*current_state_residue = (DiagonalCanonMat(temp_svd.singularValues())*temp_svd.matrixV().adjoint()).b ;
+				//.block(0,0,stored_matrix_dimensions[i+1]*hilbert_dim,C);
+
+
 
 		current_mps_itr++;
 	}
@@ -128,7 +137,7 @@ void Mps::constructor_common_memory_init() {
 
 	    //Push back to set a whole load of new Canon_Mat_ptrs of the right size
 	    for (int i=0; i<n_sites; ++i){
-	    	mps_pointers.push_back(CanonMat_ptr(new CanonMat(hilbert_dim, 1)) );
+	    	//mps_pointers.push_back(CanonMat_ptr(new CanonMat(hilbert_dim, 1)) );
 	    }
 
 
@@ -144,8 +153,9 @@ Mps::~Mps(){}
 
 void Mps::sweep_from_left_at(int position, const CanonMat**& pointers){
 	//cout<<pointers[position]<<endl;
-	Svd localsweep(*pointers[position]);
-	pointers[position]= & localsweep.matrixU();
+
+	//JacobiSVD<CanonMat> localsweep(*pointers[position], ComputeThinU | ComputeThinV);
+	//pointers[position]= & localsweep.matrixU();
 	//cout<<pointers[position]<<endl;
 	//cout<<*pointers[position]<<endl;
 }

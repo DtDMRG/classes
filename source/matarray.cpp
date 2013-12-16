@@ -139,7 +139,7 @@ int main(void) {
 	cout << "This V matrix IS pointed to by objarray[1]" << endl;
 	cout << "*objarray[1] =" << endl;
 	cout<< *objarray[1]<< endl<<endl;*/
-	Svd KK(M);
+	JacobiSVD<CanonMat> KK(M);
 	//cout<<KK.singularValues()<<endl;
 	//cout<<KK.matrixU()<<endl;
 	//cout<<KK.matrixV()<<endl;
@@ -157,4 +157,35 @@ Mps pp(5,4);
 
 //cout<<*(pp.mps_pointers[0])<<endl;
 //cout<<*MM<<endl;
+
+
+//Trying to get the resizing of matricies to work/understand it.
+//----------------------------------------------------------
+
+CanonMat original_matrix;
+
+original_matrix.setRandom(3,3);
+cout<< "---------------------" << endl;
+cout<< "Random 3 by 3 matrix:" << endl;
+cout<<original_matrix<<endl;
+
+CanonMat copied_matrix;
+
+copied_matrix = original_matrix;
+
+copied_matrix = copied_matrix*copied_matrix;
+
+cout<< "Original matrix after copy:" << endl;
+cout<<original_matrix<<endl;
+cout<< "Copied matrix after being multipled by 100:" << endl;
+cout<<copied_matrix<<endl;
+
+
+
+cout<< "Original matrix after resize to vector:" << endl;
+cout<<original_matrix<<endl;
+
+
+
+
 }
