@@ -17,7 +17,7 @@ QState::QState(int ns, int db) {
 	//By default we simple set it to be the 000... state
 
 	//Create state initially filled with Zeros
-	state_vector = CanonVec::Random( full_state_dim);
+	state_vector = CanonVec::Zero( full_state_dim);
 
 	//Set the 00... state to 1.0
 	state_vector(0) = 1.0;

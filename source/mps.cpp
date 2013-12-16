@@ -25,36 +25,18 @@ Mps::Mps(int ns, int db) {
 	//Initialize memory for pointers and array of dimensions
 	constructor_common_memory_init();
 
-
 	//Define the column matrix of the down state
 	CanonMat init= CanonMat( db ,1 );
 
-    for (int i=0;i<db-1;i++){
-    	init(i,0)= complex(double(i),0.);
-    }
-    init(db-1,0)=1.0;
+	stored_matrix_dimensions[0] = 1;
 
-    //Deference vector (1star) and deference shared_ptr (second star) to set
+	for (int i=0; i<n_sites;i++) {
 
-    for ( CanonMat_itr it = mps_pointers.begin(); it != mps_pointers.end(); it++ ){
-    	**it=init;
-    }
+		stored_matrix_dimensions[i+1] = 1;
 
+		mps_matricies[i] = CanonMat::Identity( hilbert_dim,1);
 
-    //Initialize the dimensions vector to one for each site
-	for (int i=0;i<n_sites;i++){
-		stored_matrix_dimensions[i]=1;
-	//	mps_pointers[i]=&init;
 	}
-	stored_matrix_dimensions[n_sites]=1;
-
-	 //This is to test it is working here --- TO BE REMOVED
-	    for ( CanonMat_itr it = mps_pointers.begin(); it != mps_pointers.end(); it++ ){
-	        	**it=CanonMat::Ones(db,1);
-	        	cout<< "allocated CanonMat:"<<endl;
-	        	cout<< **it <<endl <<endl;
-	    }
-
 
 }
 
@@ -82,10 +64,6 @@ Mps::Mps(QState input_qstate) {
 	//Store the rank of the first dimension which by definition should be 1
 	stored_matrix_dimensions[0] = 1;
 
-	//Iterator used to access all the pointers I need to get to
-	CanonMat_itr current_mps_itr;
-	current_mps_itr = mps_pointers.begin();
-
 	for (int i=0; i<n_sites;i++) {
 
 		int lead_mat_index =stored_matrix_dimensions[i]*hilbert_dim;
@@ -103,8 +81,6 @@ Mps::Mps(QState input_qstate) {
 		mps_matricies[i] = temp_u;
 
 		current_state_residue = temp_svd.singularValues().head(current_rank).asDiagonal() * temp_svd.matrixV().adjoint().topRows(current_rank);
-
-		current_mps_itr++;
 	}
 
 
@@ -115,19 +91,9 @@ Mps::Mps(QState input_qstate) {
 
 void Mps::constructor_common_memory_init() {
 
-		//Resize the arrays to the right size
-
 	    stored_matrix_dimensions= new int[n_sites+1];
-	    //mps_pointers = new const CanonMat*[ns];
-	    //mps_pointers.resize(ns);
-	    //myVector.push_back(Base_p(new Derived));
 
 	    mps_matricies.resize(n_sites);
-
-	    //Push back to set a whole load of new Canon_Mat_ptrs of the right size
-	    for (int i=0; i<n_sites; ++i){
-	    	mps_pointers.push_back(CanonMat_ptr(new CanonMat(hilbert_dim, 1)) );
-	    }
 
 
 
@@ -140,13 +106,16 @@ Mps::~Mps(){}
 
 
 
-void Mps::sweep_from_left_at(int position, const CanonMat**& pointers){
+void Mps::sweep_from_left_at(int position) {
+
+		/*
 	//cout<<pointers[position]<<endl;
 
 	//JacobiSVD<CanonMat> localsweep(*pointers[position], ComputeThinU | ComputeThinV);
 	//pointers[position]= & localsweep.matrixU();
 	//cout<<pointers[position]<<endl;
 	//cout<<*pointers[position]<<endl;
+	*/
 }
 
 CanonMat Mps::return_matrix_at_site(int site) {

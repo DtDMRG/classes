@@ -11,15 +11,6 @@
 #include "Eigen/Dense"
 #include "Eigen/SVD"
 
-//Need to check that we are using c++11 if not, we have to get shared pointers from an older resource
-#if defined(__GXX_EXPERIMENTAL_CXX0X) || __cplusplus >= 201103
-	#include <memory>
-	#define shared_ptr std::shared_ptr
-#else
-	#include <tr1/memory>
-	#define shared_ptr std::tr1::shared_ptr
-#endif
-
 #include <vector>
 
 #define vector std::vector
@@ -39,11 +30,6 @@ typedef DiagonalMatrix<datatype, Dynamic, Dynamic> DiagonalCanonMat;
 
 //Vector used to store all values
 typedef Matrix<datatype, Dynamic, 1> CanonVec;
-
-typedef shared_ptr<CanonMat> CanonMat_ptr;
-typedef shared_ptr<CanonVec> CanonVec_ptr;
-
-typedef vector<CanonMat_ptr>::iterator CanonMat_itr;
 
 typedef JacobiSVD<CanonMat> Svd;
 
