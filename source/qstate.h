@@ -19,7 +19,7 @@ class QState {
 
 	int n_sites, hilbert_dim, full_state_dim;
 
-	CanonVec_ptr ptr_state;
+	CanonVec state_vector;
 
 public:
 

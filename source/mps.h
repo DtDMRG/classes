@@ -20,6 +20,8 @@ class Mps {
 
 	vector<CanonMat_ptr> mps_pointers;
 
+	vector<CanonMat> mps_matricies;
+
 	/*
 	* Private functions
 	* After running a private function the validate MPS state is _not_ required to return true
@@ -64,7 +66,7 @@ public:
 
 	//Simple functions for returning internal variables
 
-	void sweep_from_left_at(int, const CanonMat** &); //Perform an SVD and then change the matrix at site and also pass the residue to site plus 1
+	void sweep_from_left_at(int); //Perform an SVD and then change the matrix at site and also pass the residue to site plus 1
 	void sweep_from_right_at(int); //*
 	void trunc_sweep_from_left_at(int,int); //Perform an SVD and then change the matrix at site and also pass the residue to site plus 1
 	void trunc_sweep_from_right_at(int,int); //*
@@ -82,7 +84,8 @@ public:
 	void return_array_list(); //Simply return the array list
 	void validate_MPS(); //Check all the data stored in memory is valid and consistent. For example check that the stored_MPS is consistent with the stored_matrix_dimensions
 
-
+	//Temporary functions for debugging
+	CanonMat return_matrix_at_site(int);
 
 };
 

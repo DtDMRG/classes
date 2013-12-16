@@ -40,24 +40,12 @@ typedef DiagonalMatrix<datatype, Dynamic, Dynamic> DiagonalCanonMat;
 //Vector used to store all values
 typedef Matrix<datatype, Dynamic, 1> CanonVec;
 
-
-
 typedef shared_ptr<CanonMat> CanonMat_ptr;
 typedef shared_ptr<CanonVec> CanonVec_ptr;
 
 typedef vector<CanonMat_ptr>::iterator CanonMat_itr;
 
-/*
-class Svd: public JacobiSVD<CanonMat>{
-public:
-	Svd(CanonMat M): JacobiSVD<CanonMat>(M, ComputeThinU | ComputeThinV){}
-	~Svd(){}
-};
-*/
-
-
-
-
+typedef JacobiSVD<CanonMat> Svd;
 
 
 #endif /* MATRIXDEFS_H_ */

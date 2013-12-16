@@ -11,19 +11,16 @@ QState::QState(int ns, int db) {
 	hilbert_dim = db;
 
 	//Derived dull state dimension.
-	full_state_dim = hilbert_dim^n_sites;
+	full_state_dim = pow(hilbert_dim,n_sites);
 
 	//Our aim is to define simple a 1 by hilbert_dim^n_sites vector.
 	//By default we simple set it to be the 000... state
 
 	//Create state initially filled with Zeros
-	CanonVec init_state = CanonMat::Zero( full_state_dim, 1);
+	state_vector = CanonVec::Random( full_state_dim);
 
 	//Set the 00... state to 1.0
-	init_state(0,0) = 1.0;
-
-	//Store the state in the shared pointer
-	*ptr_state = init_state;
+	state_vector(0) = 1.0;
 
 }
 
@@ -44,6 +41,6 @@ int QState::return_full_state_dim(){
 }
 
 CanonVec QState::return_qstate() {
-	return *ptr_state;
+	return state_vector;
 }
 

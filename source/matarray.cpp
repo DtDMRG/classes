@@ -13,6 +13,7 @@
 #include <iostream>
 #include "matrixdefs.h"
 #include "mps.h"
+#include "qstate.h"
 
 /* selected definitions from std*/
 #define complex std::complex<double>
@@ -180,10 +181,53 @@ cout<<original_matrix<<endl;
 cout<< "Copied matrix after being multipled by 100:" << endl;
 cout<<copied_matrix<<endl;
 
-
+original_matrix.resize(9,1);
 
 cout<< "Original matrix after resize to vector:" << endl;
 cout<<original_matrix<<endl;
+
+
+CanonVec copied_vector;
+
+copied_vector = original_matrix;
+
+cout<< "Attempt to copy the matrix onto a vector:" << endl;
+cout<<copied_vector<<endl;
+
+//Testing out QState
+
+QState simple_state(2,2);
+
+cout<< "Print out q state that is stored" << endl;
+cout<< simple_state.return_qstate() <<endl;
+
+Mps simple_mps(simple_state);
+
+cout<< "Print out mps state that was made from qstate" << endl;
+cout<< "at site 1:" << endl;
+cout<< simple_mps.return_matrix_at_site(0) <<endl;
+cout<< "at site 2:" << endl;
+cout<< simple_mps.return_matrix_at_site(1) <<endl;
+
+
+CanonMat matrix_1, matrix_2, store_matrix;
+
+matrix_1.setRandom(3,3);
+matrix_2.setRandom(2,2);
+
+store_matrix = matrix_1;
+
+cout<< "---------------------" << endl;
+cout<< "Stored matrix before:" << endl;
+cout<<store_matrix<<endl;
+
+store_matrix = matrix_2;
+
+cout<< "Stored matrix after:" << endl;
+cout<<store_matrix<<endl;
+
+
+
 
 
 
