@@ -196,7 +196,8 @@ cout<<copied_vector<<endl;
 
 //Testing out QState
 
-QState simple_state(2,2);
+int n_states = 4;
+QState simple_state(n_states,2);
 
 cout<< "Print out q state that is stored" << endl;
 cout<< simple_state.return_qstate() <<endl;
@@ -204,11 +205,9 @@ cout<< simple_state.return_qstate() <<endl;
 Mps simple_mps(simple_state);
 
 cout<< "Print out mps state that was made from qstate" << endl;
-cout<< "at site 1:" << endl;
-cout<< simple_mps.return_matrix_at_site(0) <<endl;
-cout<< "at site 2:" << endl;
-cout<< simple_mps.return_matrix_at_site(1) <<endl;
-
+for (int i=0; i<n_states; i++) {
+	cout<< simple_mps.return_matrix_at_site(i) <<endl;
+}
 
 CanonMat matrix_1, matrix_2, store_matrix;
 
