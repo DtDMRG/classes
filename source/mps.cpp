@@ -36,7 +36,8 @@ Mps::Mps(int ns, int db) {
     mps_pointers.resize(ns);
 
     for ( CanonMat_itr it = mps_pointers.begin(); it != mps_pointers.end(); it++ ){
-    //  (*it) = &init;   !!!WHAT GOES IN HERE ----  "it" is a shared pointer!!!
+      cout<<*it<<endl;
+      cout<<'n'<<endl;
     }
 
 
@@ -67,7 +68,7 @@ Mps::~Mps(){}
 
 
 
-void Mps::sweep_from_left_at(int position, const CanonMat**& pointers){
+void Mps::sweep_from_left_at(int position){
 	//cout<<pointers[position]<<endl;
 	Svd localsweep(*pointers[position]);
 	pointers[position]= & localsweep.matrixU();

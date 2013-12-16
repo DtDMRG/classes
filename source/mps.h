@@ -38,7 +38,7 @@ public:
 
 
 	//private function
-	void sweep_from_left_at(int, const CanonMat** &); //Perform an SVD and then change the matrix at site and also pass the residue to site plus 1
+	void sweep_from_left_at(int); //Perform an SVD and then change the matrix at site and also pass the residue to site plus 1
 	void sweep_from_right_at(int); //*
 	void trunc_sweep_from_left_at(int,int); //Perform an SVD and then change the matrix at site and also pass the residue to site plus 1
 	void trunc_sweep_from_right_at(int,int); //*
