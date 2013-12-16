@@ -10,10 +10,7 @@
  * matrix objects.
  */
 
-#include "Eigen/Dense"
-#include "Eigen/SVD"
 #include <iostream>
-#include <tr1/memory>
 #include "matrixdefs.h"
 #include "mps.h"
 
@@ -101,10 +98,10 @@ int main(void) {
 	Matrix<typeword, Dynamic, Dynamic> M(Nsigmai, Nj), N(Nsigmai, Nj);
 	for (int k = 0; k < Nsigma; k++) {
 		M.block(Ni * k, 0, Ni, Nj) = (k + 1)
-				* Matrix<typeword, Dynamic, Dynamic>::Ones(Ni, Nj);
+				* Matrix<typeword, Dynamic, Dynamic>::Ones(Nj,Nj);
 	}
 	Matrix<typeword, Dynamic, Dynamic> P(Ni, Ni);
-	P = 2 * Matrix<typeword, Dynamic, Dynamic>::Identity(Ni, Ni);
+	P = 2 * Matrix<typeword, Dynamic, Dynamic>::Identity(Nj,Nj);
 
 
 	//Point array elements to these matrix types now
@@ -126,10 +123,10 @@ int main(void) {
 
 	cout<< "We call a canonical matrix multiplication without copying:" << endl;
 	N = canonmult(*objarray[1], *objarray[0], Nsigma);
-	cout<< N << endl<< endl;
+	cout<< N << endl;
 
 
-	cout<< "We can easily to SVD too:" << endl<<endl;
+	cout<< "We can easily to SVD too:" << endl;
 
 	//We will need to do this via function calls and the templates are
 	//the way to do this in Eigen:
@@ -142,10 +139,10 @@ int main(void) {
 	cout << "This V matrix IS pointed to by objarray[1]" << endl;
 	cout << "*objarray[1] =" << endl;
 	cout<< *objarray[1]<< endl<<endl;*/
-	Svd KK(M);
-cout<<KK.singularValues()<<endl<<endl;
-cout<<KK.matrixU()<<endl<<endl;
-cout<<KK.matrixV()<<endl<<endl;
+	JacobiSVD<CanonMat> KK(M);
+	//cout<<KK.singularValues()<<endl;
+	//cout<<KK.matrixU()<<endl;
+	//cout<<KK.matrixV()<<endl;
 Mps pp(5,4);
 //cout<<pp.stored_matrix_dimensions[0]<<endl;
 //cout<<pp.stored_matrix_dimensions[1]<<endl;
@@ -160,4 +157,35 @@ Mps pp(5,4);
 
 //cout<<*(pp.mps_pointers[0])<<endl;
 //cout<<*MM<<endl;
+
+
+//Trying to get the resizing of matricies to work/understand it.
+//----------------------------------------------------------
+
+CanonMat original_matrix;
+
+original_matrix.setRandom(3,3);
+cout<< "---------------------" << endl;
+cout<< "Random 3 by 3 matrix:" << endl;
+cout<<original_matrix<<endl;
+
+CanonMat copied_matrix;
+
+copied_matrix = original_matrix;
+
+copied_matrix = copied_matrix*copied_matrix;
+
+cout<< "Original matrix after copy:" << endl;
+cout<<original_matrix<<endl;
+cout<< "Copied matrix after being multipled by 100:" << endl;
+cout<<copied_matrix<<endl;
+
+
+
+cout<< "Original matrix after resize to vector:" << endl;
+cout<<original_matrix<<endl;
+
+
+
+
 }
