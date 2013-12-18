@@ -113,6 +113,16 @@ void Mps::sweep_from_left_at(int position) {
 	stored_matrix_dimensions[position+1] = current_rank;
 	CanonMat temp_u = temp_svd.matrixU().leftCols(current_rank);
 	mps_matrices[position] = temp_u;
+
+	cout<<"current rank"<<endl;
+	cout<<current_rank<<endl<<endl;
+
+	cout<<"U"<<endl;
+	cout<<temp_u<<endl<<endl;
+
+	cout<<"SV"<<endl;
+	cout<<temp_svd.singularValues().head(current_rank).asDiagonal() * temp_svd.matrixV().adjoint().topRows(current_rank)<<endl<<endl;
+
 	CanonMat temp_new_matrix = leftcanonmult(
 			temp_svd.singularValues().head(current_rank).asDiagonal() * temp_svd.matrixV().adjoint().topRows(current_rank),
 			temp_new_matrix, current_rank,stored_matrix_dimensions[position+2]);
@@ -126,11 +136,11 @@ template<typename DerivedA, typename DerivedB>
 DerivedB Mps::leftcanonmult(const MatrixBase<DerivedA>& sv_matrix,
 		const MatrixBase<DerivedB>& next_matrix, int rank, int next_matrix_dimension) {
 
-	DerivedB new_next_matrix(rank, next_matrix_dimension);
+	DerivedB new_next_matrix(next_matrix_dimension*hilbert_dim, rank);
 
 	for (int k = 0; k < hilbert_dim; k++) {
-		new_next_matrix.block(rank * k, 0, rank, next_matrix_dimension) = sv_matrix
-				* next_matrix.block(rank * k, 0, rank, next_matrix_dimension);
+		new_next_matrix.block(rank * k, 0,  next_matrix_dimension, rank) = sv_matrix
+				* next_matrix.block(rank * k, 0,  next_matrix_dimension, rank);
 	}
 
 	return new_next_matrix;

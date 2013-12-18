@@ -144,11 +144,21 @@ int main(void) {
 	//cout<<KK.singularValues()<<endl;
 	//cout<<KK.matrixU()<<endl;
 	//cout<<KK.matrixV()<<endl;
+
+cout << "making an mps object"<<endl;
 Mps pp(5,4);
 
+cout<<pp.return_matrix_at_site(1)<<endl;
+
+cout<<"sweep at site 1"<<endl;
+pp.sweep_from_left_at(1);
+
+cout<<pp.return_matrix_at_site(1)<<endl;
 
 
 exit(0);
+
+
 //cout<<pp.stored_matrix_dimensions[0]<<endl;
 //cout<<pp.stored_matrix_dimensions[1]<<endl;
 //cout<<pp.stored_matrix_dimensions[2]<<endl;
