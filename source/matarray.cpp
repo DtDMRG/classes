@@ -13,6 +13,7 @@
 #include <iostream>
 #include "matrixdefs.h"
 #include "mps.h"
+#include "qstate.h"
 
 /* selected definitions from std*/
 #define complex std::complex<double>
@@ -144,6 +145,10 @@ int main(void) {
 	//cout<<KK.matrixU()<<endl;
 	//cout<<KK.matrixV()<<endl;
 Mps pp(5,4);
+
+
+
+exit(0);
 //cout<<pp.stored_matrix_dimensions[0]<<endl;
 //cout<<pp.stored_matrix_dimensions[1]<<endl;
 //cout<<pp.stored_matrix_dimensions[2]<<endl;
@@ -180,10 +185,52 @@ cout<<original_matrix<<endl;
 cout<< "Copied matrix after being multipled by 100:" << endl;
 cout<<copied_matrix<<endl;
 
-
+original_matrix.resize(9,1);
 
 cout<< "Original matrix after resize to vector:" << endl;
 cout<<original_matrix<<endl;
+
+
+CanonVec copied_vector;
+
+copied_vector = original_matrix;
+
+cout<< "Attempt to copy the matrix onto a vector:" << endl;
+cout<<copied_vector<<endl;
+
+//Testing out QState
+
+int n_states = 4;
+QState simple_state(n_states,2);
+
+cout<< "Print out q state that is stored" << endl;
+cout<< simple_state.return_qstate() <<endl;
+
+Mps simple_mps(simple_state);
+
+cout<< "Print out mps state that was made from qstate" << endl;
+for (int i=0; i<n_states; i++) {
+	cout<< simple_mps.return_matrix_at_site(i) <<endl;
+}
+
+CanonMat matrix_1, matrix_2, store_matrix;
+
+matrix_1.setRandom(3,3);
+matrix_2.setRandom(2,2);
+
+store_matrix = matrix_1;
+
+cout<< "---------------------" << endl;
+cout<< "Stored matrix before:" << endl;
+cout<<store_matrix<<endl;
+
+store_matrix = matrix_2;
+
+cout<< "Stored matrix after:" << endl;
+cout<<store_matrix<<endl;
+
+
+
 
 
 
