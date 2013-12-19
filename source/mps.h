@@ -13,9 +13,9 @@ class Mps {
 	 * Private memory where things are stored
 	 */
 
-	int n_sites, hilbert_dim;
+	unsigned n_sites, hilbert_dim;
 
-	int* stored_matrix_dimensions;
+	unsigned* stored_matrix_dimensions;
 	//const CanonMat** mps_pointers;
 
 	vector<CanonMat> mps_matrices;
@@ -43,7 +43,7 @@ public:
 	 * given the 1 the number of sites
 	 * and 2 the hilbert dimension of each site
 	 */
-	Mps(int, int);
+	Mps(unsigned, unsigned);
 
 	/*
 	 * Create an MPS from a state
@@ -64,31 +64,31 @@ public:
 
 	//Simple functions for returning internal variables
 
-	void sweep_from_left_at(int); //Perform an SVD and then change the matrix at site and also pass the residue to site plus 1
-	void sweep_from_right_at(int); //*
-	void trunc_sweep_from_left_at(int,int); //Perform an SVD and then change the matrix at site and also pass the residue to site plus 1
-	void trunc_sweep_from_right_at(int,int); //*
+	void sweep_from_left_at(unsigned); //Perform an SVD and then change the matrix at site and also pass the residue to site plus 1
+	void sweep_from_right_at(unsigned); //*
+	void trunc_sweep_from_left_at(unsigned,unsigned); //Perform an SVD and then change the matrix at site and also pass the residue to site plus 1
+	void trunc_sweep_from_right_at(unsigned,unsigned); //*
 
 	//Functions for manipulating MPS
 	void make_left_canonincal(); //Make the matrix left canonical (calls private function sweep left many times)
 	void make_right_canonical(); //Make the matrix
-	void compress(int);
+	void compress(unsigned);
 
 
 
 
 	//Some functions for debugging
-	void return_matrix(int,int); //returns matrix at site and dim
+	void return_matrix(unsigned,unsigned); //returns matrix at site and dim
 	void return_array_list(); //Simply return the array list
 	void validate_MPS(); //Check all the data stored in memory is valid and consistent. For example check that the stored_MPS is consistent with the stored_matrix_dimensions
 
 	//Temporary functions for debugging
-	CanonMat return_matrix_at_site(int);
+	CanonMat return_matrix_at_site(unsigned);
 
 	//Multiplying canonical matrices for sweep from left
 	template<typename DerivedA, typename DerivedB>
 	DerivedB leftcanonmult(const MatrixBase<DerivedA>& ,
-			const MatrixBase<DerivedB>&, int, int);
+			const MatrixBase<DerivedB>&, unsigned, unsigned);
 
 
 };
