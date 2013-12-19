@@ -40,6 +40,37 @@ Mps::Mps(unsigned ns, unsigned db) {
 
 }
 
+//To make a random MPS for testing with variable matrix dimensions
+Mps::Mps(unsigned ns, unsigned db, char ifpresent) {
+
+	//Set the value of numsites and dimbasis
+	n_sites = ns;
+	hilbert_dim = db;
+
+	//Initialize memory for pointers and array of dimensions
+	constructor_common_memory_init();
+
+	//Define the column matrix of the down state
+	stored_matrix_dimensions[0] = 1;
+
+	for (unsigned i=1; i<n_sites/2+1;i++) {
+
+		stored_matrix_dimensions[i] = i+1;
+
+	}
+	for (unsigned i=n_sites; i>n_sites/2;i--) {
+
+		stored_matrix_dimensions[i] = n_sites-i+1;
+
+	}
+	for (unsigned i=0; i<n_sites; i++){
+
+		mps_matrices[i] = CanonMat::Random( hilbert_dim*stored_matrix_dimensions[i],stored_matrix_dimensions[i+1]);
+
+	}
+
+}
+
 Mps::Mps(QState input_qstate) {
 
 	//Extract and store common variables

@@ -146,14 +146,20 @@ int main(void) {
 	//cout<<KK.matrixV()<<endl;
 
 cout << "making an mps object"<<endl;
-Mps pp(5,4);
+Mps pp(6,2,'i');
 
-cout<<pp.return_matrix_at_site(1)<<endl;
+cout<<pp.return_matrix_at_site(0)<<endl<<endl;
+cout<<pp.return_matrix_at_site(1)<<endl<<endl;
+cout<<pp.return_matrix_at_site(2)<<endl<<endl;
+cout<<pp.return_matrix_at_site(3)<<endl<<endl;
+cout<<pp.return_matrix_at_site(4)<<endl<<endl;
+cout<<pp.return_matrix_at_site(5)<<endl<<endl;
 
-cout<<"sweep at site 1"<<endl;
-pp.sweep_from_left_at(1);
 
-cout<<pp.return_matrix_at_site(1)<<endl;
+cout<<"sweep at site 3"<<endl;
+pp.sweep_from_left_at(3);
+
+cout<<pp.return_matrix_at_site(3)<<endl;
 
 
 exit(0);

@@ -45,6 +45,8 @@ public:
 	 */
 	Mps(unsigned, unsigned);
 
+
+	Mps(unsigned, unsigned, char);
 	/*
 	 * Create an MPS from a state
 	 * only requires a QState everything else is simply extracted from that object
