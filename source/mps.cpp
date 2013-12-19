@@ -145,17 +145,17 @@ void Mps::sweep_from_left_at(unsigned position) {
 
 	unsigned current_rank = temp_svd.nonzeroSingularValues();
 
-	stored_matrix_dimensions[position+1] = current_rank;
-
 	CanonMat temp_u = temp_svd.matrixU().leftCols(current_rank);
 
 	mps_matrices[position] = temp_u;
 
 	CanonMat temp_new_matrix = leftcanonmult(
 			temp_svd.singularValues().head(current_rank).asDiagonal() * temp_svd.matrixV().adjoint().topRows(current_rank),
-			mps_matrices[position+1],current_rank,stored_matrix_dimensions[position+2]);
+			mps_matrices[position+1],current_rank,stored_matrix_dimensions[position+1],stored_matrix_dimensions[position+2]);
 
 	mps_matrices[position+1] = temp_new_matrix;
+
+	stored_matrix_dimensions[position+1] = current_rank;
 }
 
 
@@ -164,7 +164,7 @@ void Mps::sweep_from_left_at(unsigned position) {
 //Performs no checks that the matrix sizes match, so must not be used publicly
 template<typename DerivedA, typename DerivedB>
 DerivedB Mps::leftcanonmult(const MatrixBase<DerivedA>& sv_matrix,
-		const MatrixBase<DerivedB>& next_matrix, unsigned rank, unsigned next_matrix_dimension) {
+		const MatrixBase<DerivedB>& next_matrix, unsigned rank, unsigned matrix_dimension, unsigned next_matrix_dimension) {
 
 	DerivedB new_next_matrix(rank*hilbert_dim,next_matrix_dimension);
 
@@ -176,6 +176,78 @@ DerivedB Mps::leftcanonmult(const MatrixBase<DerivedA>& sv_matrix,
 	return new_next_matrix;
 }
 
+//Make the matrix left canonical (calls private function sweep left many times)
+void Mps::make_left_canonical(void){
+
+	for (unsigned site=0; site<n_sites-1;site++) {
+		sweep_from_left_at(site);
+	}
+
+	Svd temp_svd(mps_matrices[n_sites-1], ComputeThinU | ComputeThinV);
+
+	CanonMat temp_u = temp_svd.matrixU().leftCols(temp_svd.nonzeroSingularValues());
+
+	mps_matrices[n_sites-1] = temp_u;
+
+}
+
+void Mps::sweep_from_right_at(unsigned position) {
+
+	Svd temp_svd(mps_matrices[position], ComputeThinU | ComputeThinV);
+
+	unsigned current_rank = temp_svd.nonzeroSingularValues();
+
+	CanonMat temp_v = temp_svd.matrixV().adjoint().topRows(current_rank);
+
+	mps_matrices[position] = temp_v;
+
+	CanonMat temp_new_matrix = rightcanonmult(
+			temp_svd.matrixU().leftCols(current_rank)*temp_svd.singularValues().head(current_rank).asDiagonal(),
+			mps_matrices[position-1],current_rank,stored_matrix_dimensions[position+1],stored_matrix_dimensions[position]);
+
+	mps_matrices[position-1] = temp_new_matrix;
+
+	stored_matrix_dimensions[position+1] = current_rank;
+}
+
+
+//To be made private
+//Multiplies a matrix canonical matrix "next_matrix" by "su_matrix" as hilbert_dim blocks
+//Performs no checks that the matrix sizes match, so must not be used publicly
+template<typename DerivedA, typename DerivedB>
+DerivedB Mps::rightcanonmult(const MatrixBase<DerivedA>& us_matrix,
+		const MatrixBase<DerivedB>& next_matrix, unsigned rank, unsigned matrix_dimension, unsigned next_matrix_dimension) {
+
+	DerivedB new_next_matrix(next_matrix_dimension*hilbert_dim,rank);
+
+	cout << "US" <<endl;
+	cout << us_matrix << endl << endl;
+	cout << "new matrix on left" << endl;
+	cout << new_next_matrix << endl << endl;
+
+	for (unsigned k = 0; k < hilbert_dim; k++) {
+		new_next_matrix.block(next_matrix_dimension * k, 0,  next_matrix_dimension, rank) =
+				next_matrix.block(next_matrix_dimension * k, 0,   next_matrix_dimension, matrix_dimension) * us_matrix;
+	}
+
+	return new_next_matrix;
+}
+
+
+//Make the matrix left canonical (calls private function sweep left many times)
+void Mps::make_right_canonical(void){
+
+	for (unsigned site=n_sites-1; site>0; site--) {
+		sweep_from_left_at(site);
+	}
+
+	Svd temp_svd(mps_matrices[0], ComputeThinU | ComputeThinV);
+
+	CanonMat temp_v = temp_svd.matrixV().adjoint().topRows(temp_svd.nonzeroSingularValues());
+
+	mps_matrices[0] = temp_v;
+
+}
 
 
 //Must template
@@ -190,7 +262,7 @@ CanonMat Mps::return_matrix_at_site(unsigned site) {
 
 
 //Compares the elements of stored_matrix_dimensions with the dimensions of the matrices contained in mps_matrices
-int Mps::validate_MPS(){
+int Mps::validate_MPS(void){
 	for(unsigned int i=0; i<mps_matrices.size(); i++){
 		unsigned left =stored_matrix_dimensions[i]*hilbert_dim;
 

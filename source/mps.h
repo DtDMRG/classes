@@ -72,8 +72,8 @@ public:
 	void trunc_sweep_from_right_at(unsigned,unsigned); //*
 
 	//Functions for manipulating MPS
-	void make_left_canonincal(); //Make the matrix left canonical (calls private function sweep left many times)
-	void make_right_canonical(); //Make the matrix
+	void make_left_canonical(void); //Make the matrix left canonical (calls private function sweep left many times)
+	void make_right_canonical(void); //Make the matrix
 	void compress(unsigned);
 
 
@@ -83,7 +83,7 @@ public:
 	//Some functions for debugging
 	void return_matrix(unsigned,unsigned); //returns matrix at site and dim
 	void return_array_list(); //Simply return the array list
-	int validate_MPS(); //Check all the data stored in memory is valid and consistent. For example check that the stored_MPS is consistent with the stored_matrix_dimensions
+	int validate_MPS(void); //Check all the data stored in memory is valid and consistent. For example check that the stored_MPS is consistent with the stored_matrix_dimensions
 
 
 	//Temporary functions for debugging
@@ -92,7 +92,11 @@ public:
 	//Multiplying canonical matrices for sweep from left
 	template<typename DerivedA, typename DerivedB>
 	DerivedB leftcanonmult(const MatrixBase<DerivedA>& ,
-			const MatrixBase<DerivedB>&, unsigned, unsigned);
+			const MatrixBase<DerivedB>&, unsigned, unsigned, unsigned);
+	//Multiplying canonical matrices for sweep from right
+		template<typename DerivedA, typename DerivedB>
+		DerivedB rightcanonmult(const MatrixBase<DerivedA>& ,
+				const MatrixBase<DerivedB>&, unsigned, unsigned, unsigned);
 
 
 };
