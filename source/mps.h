@@ -79,6 +79,7 @@ public:
 
 
 
+
 	//Some functions for debugging
 	void return_matrix(unsigned,unsigned); //returns matrix at site and dim
 	void return_array_list(); //Simply return the array list

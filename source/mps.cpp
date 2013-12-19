@@ -186,6 +186,7 @@ CanonMat Mps::return_matrix_at_site(unsigned site) {
 
 
 
+
 //Compares the elements of stored_matrix_dimensions with the dimensions of the matrices contained in mps_matrices
 int Mps::validate_MPS(){
 	for(unsigned int i=0; i<mps_matrices.size(); i++){
