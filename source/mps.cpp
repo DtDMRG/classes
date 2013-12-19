@@ -174,7 +174,6 @@ DerivedB Mps::leftcanonmult(const MatrixBase<DerivedA>& sv_matrix,
 }
 
 
-
 //Must template
 CanonMat Mps::return_matrix_at_site(unsigned site) {
 
