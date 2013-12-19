@@ -249,7 +249,6 @@ void Mps::make_right_canonical(void){
 
 }
 
-
 //Must template
 CanonMat Mps::return_matrix_at_site(unsigned site) {
 
