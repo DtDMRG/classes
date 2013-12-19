@@ -79,10 +79,12 @@ public:
 
 
 
+
 	//Some functions for debugging
 	void return_matrix(unsigned,unsigned); //returns matrix at site and dim
 	void return_array_list(); //Simply return the array list
-	void validate_MPS(); //Check all the data stored in memory is valid and consistent. For example check that the stored_MPS is consistent with the stored_matrix_dimensions
+	int validate_MPS(); //Check all the data stored in memory is valid and consistent. For example check that the stored_MPS is consistent with the stored_matrix_dimensions
+
 
 	//Temporary functions for debugging
 	CanonMat return_matrix_at_site(unsigned);

@@ -6,6 +6,8 @@
 #include "mps.h"
 
 #include <iostream>
+#include <stdio.h>      //fputs
+#include <stdlib.h>     //abort
 #define cout std::cout
 #define endl std::endl
 
@@ -151,7 +153,7 @@ void Mps::sweep_from_left_at(unsigned position) {
 
 	CanonMat temp_new_matrix = leftcanonmult(
 			temp_svd.singularValues().head(current_rank).asDiagonal() * temp_svd.matrixV().adjoint().topRows(current_rank),
-			temp_new_matrix, current_rank,stored_matrix_dimensions[position+2]);
+			mps_matrices[position+1],current_rank,stored_matrix_dimensions[position+2]);
 
 	mps_matrices[position+1] = temp_new_matrix;
 }
@@ -159,15 +161,16 @@ void Mps::sweep_from_left_at(unsigned position) {
 
 //To be made private
 //Multiplies a matrix "sv_matrix" by canonical matrix "next_matrix" as hilbert_dim blocks
+//Performs no checks that the matrix sizes match, so must not be used publicly
 template<typename DerivedA, typename DerivedB>
 DerivedB Mps::leftcanonmult(const MatrixBase<DerivedA>& sv_matrix,
 		const MatrixBase<DerivedB>& next_matrix, unsigned rank, unsigned next_matrix_dimension) {
 
-	DerivedB new_next_matrix(next_matrix_dimension*hilbert_dim, rank);
+	DerivedB new_next_matrix(rank*hilbert_dim,next_matrix_dimension);
 
 	for (unsigned k = 0; k < hilbert_dim; k++) {
-		new_next_matrix.block(rank * k, 0,  next_matrix_dimension, rank) = sv_matrix
-				* next_matrix.block(rank * k, 0,  next_matrix_dimension, rank);
+		new_next_matrix.block(rank * k, 0, rank,next_matrix_dimension) = sv_matrix
+				* next_matrix.block(rank * k, 0, rank, next_matrix_dimension);
 	}
 
 	return new_next_matrix;
@@ -179,6 +182,28 @@ CanonMat Mps::return_matrix_at_site(unsigned site) {
 
 	return mps_matrices[site];
 }
+
+
+
+
+
+
+//Compares the elements of stored_matrix_dimensions with the dimensions of the matrices contained in mps_matrices
+int Mps::validate_MPS(){
+	for(unsigned int i=0; i<mps_matrices.size(); i++){
+		unsigned left =stored_matrix_dimensions[i]*hilbert_dim;
+
+
+		if( left !=mps_matrices[i].rows() || stored_matrix_dimensions[i+1]!=mps_matrices[i].cols() ){
+			fputs ("Dimensions of matrices do not match.\n",stderr);
+			abort();
+		}
+//		else	cout<<mps_matrices[i].rows()/hilbert_dim<<" "<<mps_matrices[i].cols()<<endl;
+	}
+
+	return 0;
+}
+
 
 
 
