@@ -6,6 +6,8 @@
 #include "mps.h"
 
 #include <iostream>
+#include <stdio.h>      //fputs
+#include <stdlib.h>     //abort
 #define cout std::cout
 #define endl std::endl
 
@@ -179,6 +181,25 @@ DerivedB Mps::leftcanonmult(const MatrixBase<DerivedA>& sv_matrix,
 CanonMat Mps::return_matrix_at_site(unsigned site) {
 
 	return mps_matrices[site];
+}
+
+
+
+
+//Compares the elements of stored_matrix_dimensions with the dimensions of the matrices contained in mps_matrices
+int Mps::validate_MPS(){
+	for(unsigned int i=0; i<mps_matrices.size(); i++){
+		unsigned left =stored_matrix_dimensions[i]*hilbert_dim;
+
+
+		if( left !=mps_matrices[i].rows() || stored_matrix_dimensions[i+1]!=mps_matrices[i].cols() ){
+			fputs ("Dimensions of matrices do not match.\n",stderr);
+			abort();
+		}
+//		else	cout<<mps_matrices[i].rows()/hilbert_dim<<" "<<mps_matrices[i].cols()<<endl;
+	}
+
+	return 0;
 }
 
 
