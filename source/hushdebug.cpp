@@ -11,6 +11,7 @@ void HushDebug::hushmain() {
 
 	cout<< "I am mikey code" << endl;
 
+
 }
 
 
