@@ -21,6 +21,8 @@ class QState {
 
 	CanonVec state_vector;
 
+	void basic_contructor_code(unsigned,unsigned);
+
 public:
 
 	/* Constructor
@@ -28,7 +30,11 @@ public:
 	 * and an int for the Hilbert space dimension for each site
 	 * produce a state in the form 000...
 	 * */
-	QState(int, int);
+	QState(unsigned, unsigned);
+
+	QState(unsigned, unsigned, unsigned);
+
+	QState(unsigned, unsigned, char);
 
 	/* Destructor
 	 *  Destructor NOT IMPLEMENTED!!!

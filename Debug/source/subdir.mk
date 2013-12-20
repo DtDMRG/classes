@@ -4,21 +4,27 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../source/hushdebug.cpp \
 ../source/matarray.cpp \
 ../source/mpo.cpp \
 ../source/mps.cpp \
+../source/qoperator.cpp \
 ../source/qstate.cpp 
 
 OBJS += \
+./source/hushdebug.o \
 ./source/matarray.o \
 ./source/mpo.o \
 ./source/mps.o \
+./source/qoperator.o \
 ./source/qstate.o 
 
 CPP_DEPS += \
+./source/hushdebug.d \
 ./source/matarray.d \
 ./source/mpo.d \
 ./source/mps.d \
+./source/qoperator.d \
 ./source/qstate.d 
 
 
