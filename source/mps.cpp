@@ -10,7 +10,7 @@
 #include <stdlib.h>     //abort
 #define cout std::cout
 #define endl std::endl
-
+#define min std::min
 
 /*CONSTRUCTOR
  * Given number of sites and dimension of the quantum basis initializes the array dimensions
@@ -149,11 +149,28 @@ void Mps::sweep_from_left_at(unsigned position) {
 
 	mps_matrices[position] = temp_u;
 
-	CanonMat temp_new_matrix = leftcanonmult(
+	mps_matrices[position+1] = left_canon_mult(
 			temp_svd.singularValues().head(current_rank).asDiagonal() * temp_svd.matrixV().adjoint().topRows(current_rank),
-			mps_matrices[position+1],current_rank,stored_matrix_dimensions[position+1],stored_matrix_dimensions[position+2]);
+			mps_matrices[position+1]);
 
-	mps_matrices[position+1] = temp_new_matrix;
+	stored_matrix_dimensions[position+1] = current_rank;
+}
+
+void Mps::trunc_sweep_from_left_at(unsigned position, unsigned trunc_dimension) {
+
+	Svd temp_svd(mps_matrices[position], ComputeThinU | ComputeThinV);
+
+	unsigned current_rank = temp_svd.nonzeroSingularValues();
+
+	current_rank = min(current_rank, trunc_dimension);
+
+	CanonMat temp_u = temp_svd.matrixU().leftCols(current_rank);
+
+	mps_matrices[position] = temp_u;
+
+	mps_matrices[position+1] = left_canon_mult(
+			temp_svd.singularValues().head(current_rank).asDiagonal() * temp_svd.matrixV().adjoint().topRows(current_rank),
+			mps_matrices[position+1]);
 
 	stored_matrix_dimensions[position+1] = current_rank;
 }
@@ -163,9 +180,12 @@ void Mps::sweep_from_left_at(unsigned position) {
 //Multiplies a matrix "sv_matrix" by canonical matrix "next_matrix" as hilbert_dim blocks
 //Performs no checks that the matrix sizes match, so must not be used publicly
 template<typename DerivedA, typename DerivedB>
-DerivedB Mps::leftcanonmult(const MatrixBase<DerivedA>& sv_matrix,
-		const MatrixBase<DerivedB>& next_matrix, unsigned rank, unsigned matrix_dimension, unsigned next_matrix_dimension) {
+DerivedB Mps::left_canon_mult(const MatrixBase<DerivedA>& sv_matrix,
+		const MatrixBase<DerivedB>& next_matrix){
 
+	unsigned matrix_dimension = next_matrix.rows()/hilbert_dim;
+	unsigned next_matrix_dimension = next_matrix.cols();
+	unsigned rank = sv_matrix.rows();
 	DerivedB new_next_matrix(rank*hilbert_dim,next_matrix_dimension);
 
 	for (unsigned k = 0; k < hilbert_dim; k++) {
@@ -201,42 +221,43 @@ void Mps::sweep_from_right_at(unsigned position) {
 
 	mps_matrices[position] = temp_v;
 
-	cout << "current_rank="<< current_rank<<endl<<endl;
-
-	CanonMat temp_new_matrix = rightcanonmult(
+	mps_matrices[position-1] = right_canon_mult(
 			temp_svd.matrixU().leftCols(current_rank)*temp_svd.singularValues().head(current_rank).asDiagonal(),
-			mps_matrices[position-1],current_rank,stored_matrix_dimensions[position],stored_matrix_dimensions[position-1]);
-
-	mps_matrices[position-1] = temp_new_matrix;
+			mps_matrices[position-1]);
 
 	stored_matrix_dimensions[position] = current_rank;
 }
 
+void Mps::trunc_sweep_from_right_at(unsigned position, unsigned trunc_dimension) {
 
+	Svd temp_svd(mps_matrices[position], ComputeThinU | ComputeThinV);
+
+	unsigned current_rank = temp_svd.nonzeroSingularValues();
+
+	current_rank = min(current_rank, trunc_dimension);
+
+	CanonMat temp_v = temp_svd.matrixV().adjoint().topRows(current_rank);
+
+	mps_matrices[position] = temp_v;
+
+	mps_matrices[position-1] = right_canon_mult(
+			temp_svd.matrixU().leftCols(current_rank)*temp_svd.singularValues().head(current_rank).asDiagonal(),
+			mps_matrices[position-1]);
+
+	stored_matrix_dimensions[position] = current_rank;
+}
 
 //To be made private
 //Multiplies a matrix canonical matrix "next_matrix" by "su_matrix" as hilbert_dim blocks
 //Performs no checks that the matrix sizes match, so must not be used publicly
 template<typename DerivedA, typename DerivedB>
-DerivedB Mps::rightcanonmult(const MatrixBase<DerivedA>& us_matrix,
-		const MatrixBase<DerivedB>& next_matrix, unsigned rank, unsigned matrix_dimension, unsigned next_matrix_dimension) {
+DerivedB Mps::right_canon_mult(const MatrixBase<DerivedA>& us_matrix,
+		const MatrixBase<DerivedB>& next_matrix) {
 
+	unsigned matrix_dimension = next_matrix.cols()/hilbert_dim;
+	unsigned next_matrix_dimension = next_matrix.rows();
+	unsigned rank = us_matrix.cols();
 	DerivedB new_next_matrix(next_matrix_dimension,rank*hilbert_dim);
-
-	cout << "US" <<endl;
-	cout << us_matrix << endl << endl;
-	cout << "matrix on left" << endl;
-	cout << next_matrix << endl << endl;
-	cout << "new matrix on left" << endl;
-	cout << new_next_matrix << endl << endl;
-	cout << "rank" << endl;
-	cout << rank << endl<< endl;
-	cout << "hilbert_dim"<<endl;
-	cout << hilbert_dim << endl<<endl;
-	cout << "matrix_dimension"<<endl;
-	cout << matrix_dimension << endl<<endl;
-	cout << "next_matrix_dimension"<<endl;
-	cout << next_matrix_dimension <<endl<<endl;
 
 	for (unsigned k = 0; k < hilbert_dim; k++) {
 		new_next_matrix.block(0, rank* k,  next_matrix_dimension, rank) =
@@ -261,6 +282,32 @@ void Mps::make_right_canonical(void){
 	mps_matrices[0] = temp_v;
 
 }
+
+
+void Mps::left_compress(unsigned trunc_dimension){
+	for (unsigned site=0; site<n_sites-1;site++) {
+		trunc_sweep_from_left_at(site, trunc_dimension);
+	}
+
+	Svd temp_svd(mps_matrices[n_sites-1], ComputeThinU | ComputeThinV);
+
+	CanonMat temp_u = temp_svd.matrixU().leftCols(temp_svd.nonzeroSingularValues());
+
+	mps_matrices[n_sites-1] = temp_u;
+}
+
+void Mps::right_compress(unsigned trunc_dimension){
+	for (unsigned site=n_sites-1; site>0; site--) {
+			trunc_sweep_from_right_at(site, trunc_dimension);
+		}
+
+		Svd temp_svd(mps_matrices[0], ComputeThinU | ComputeThinV);
+
+		CanonMat temp_v = temp_svd.matrixV().adjoint().topRows(temp_svd.nonzeroSingularValues());
+
+		mps_matrices[0] = temp_v;
+}
+
 
 //Change storage for full mps from left-storage to right-storage
 void Mps::change_mps_storage_to_right(void){
