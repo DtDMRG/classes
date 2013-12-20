@@ -213,6 +213,7 @@ void Mps::sweep_from_right_at(unsigned position) {
 }
 
 
+
 //To be made private
 //Multiplies a matrix canonical matrix "next_matrix" by "su_matrix" as hilbert_dim blocks
 //Performs no checks that the matrix sizes match, so must not be used publicly
