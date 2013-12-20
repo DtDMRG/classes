@@ -100,7 +100,7 @@ int main( int argc, char* argv[] ) {
 			return 0;
 		}
 
-		if (strcmp(argv[1],"h") == 0) {
+		if (strcmp(argv[1],"g") == 0) {
 			//Sam debug
 
 			return 0;
@@ -186,16 +186,26 @@ int main( int argc, char* argv[] ) {
 	//cout<<KK.matrixV()<<endl;
 
 cout << "making an mps object"<<endl;
-Mps pp(3,2,'i');
+Mps pp(3,3,'i');
 
 cout<<"mps before"<<endl;
 cout<<pp.return_matrix_at_site(0)<<endl<<endl;
 cout<<pp.return_matrix_at_site(1)<<endl<<endl;
 cout<<pp.return_matrix_at_site(2)<<endl<<endl;
 
-pp.sweep_from_right_at(1);
+pp.change_mps_storage_to_right();
+cout<<"left to right storage"<<endl;
 
-cout<<"mps after canonicalising"<<endl;
+
+cout<<"mps right storage"<<endl;
+cout<<pp.return_matrix_at_site(0)<<endl<<endl;
+cout<<pp.return_matrix_at_site(1)<<endl<<endl;
+cout<<pp.return_matrix_at_site(2)<<endl<<endl;
+
+//pp.sweep_from_right_at(1);
+pp.right_compress(1);
+
+cout<<"mps after right canonicalising"<<endl;
 cout<<pp.return_matrix_at_site(0)<<endl<<endl;
 cout<<pp.return_matrix_at_site(1)<<endl<<endl;
 cout<<pp.return_matrix_at_site(2)<<endl<<endl;

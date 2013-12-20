@@ -74,11 +74,13 @@ public:
 	//Functions for manipulating MPS
 	void make_left_canonical(void); //Make the matrix left canonical (calls private function sweep left many times)
 	void make_right_canonical(void); //Make the matrix
-	void compress(unsigned);
+	void left_compress(unsigned);
+	void right_compress(unsigned);
 
-
-
-
+	//Change storage of an mps from left-storage to right
+	void change_mps_storage_to_right(void);
+	//Change storage of an mps from right-storage to left
+	void change_mps_storage_to_left(void);
 
 	//Some functions for debugging
 	void return_matrix(unsigned,unsigned); //returns matrix at site and dim
@@ -89,14 +91,27 @@ public:
 	//Temporary functions for debugging
 	CanonMat return_matrix_at_site(unsigned);
 
+	/* FUNCTIONS required for more than one method
+	 * within the class.
+	 */
+
 	//Multiplying canonical matrices for sweep from left
 	template<typename DerivedA, typename DerivedB>
-	DerivedB leftcanonmult(const MatrixBase<DerivedA>& ,
-			const MatrixBase<DerivedB>&, unsigned, unsigned, unsigned);
+	DerivedB left_canon_mult(const MatrixBase<DerivedA>& ,
+			const MatrixBase<DerivedB>&);
+
 	//Multiplying canonical matrices for sweep from right
-		template<typename DerivedA, typename DerivedB>
-		DerivedB rightcanonmult(const MatrixBase<DerivedA>& ,
-				const MatrixBase<DerivedB>&, unsigned, unsigned, unsigned);
+	template<typename DerivedA, typename DerivedB>
+	DerivedB right_canon_mult(const MatrixBase<DerivedA>& ,
+			const MatrixBase<DerivedB>&);
+
+	//Change from left to right storage for canonical matrices
+	template<typename Derived>
+	Derived left_storage_to_right(const MatrixBase<Derived>&);
+
+	//Change from left to right storage for canonical matrices
+	template<typename Derived>
+	Derived right_storage_to_left(const MatrixBase<Derived>&);
 
 
 };
