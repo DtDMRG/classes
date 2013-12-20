@@ -220,7 +220,7 @@ template<typename DerivedA, typename DerivedB>
 DerivedB Mps::rightcanonmult(const MatrixBase<DerivedA>& us_matrix,
 		const MatrixBase<DerivedB>& next_matrix, unsigned rank, unsigned matrix_dimension, unsigned next_matrix_dimension) {
 
-	DerivedB new_next_matrix(next_matrix_dimension*hilbert_dim,rank);
+	DerivedB new_next_matrix(next_matrix_dimension,rank*hilbert_dim);
 
 	cout << "US" <<endl;
 	cout << us_matrix << endl << endl;
@@ -238,8 +238,8 @@ DerivedB Mps::rightcanonmult(const MatrixBase<DerivedA>& us_matrix,
 	cout << next_matrix_dimension <<endl<<endl;
 
 	for (unsigned k = 0; k < hilbert_dim; k++) {
-		new_next_matrix.block(next_matrix_dimension * k, 0,  next_matrix_dimension, rank) =
-				next_matrix.block(next_matrix_dimension * k, 0,   next_matrix_dimension, matrix_dimension) * us_matrix;
+		new_next_matrix.block(0, rank* k,  next_matrix_dimension, rank) =
+				next_matrix.block(0, matrix_dimension * k,   next_matrix_dimension, matrix_dimension) * us_matrix;
 	}
 
 	return new_next_matrix;
@@ -250,7 +250,7 @@ DerivedB Mps::rightcanonmult(const MatrixBase<DerivedA>& us_matrix,
 void Mps::make_right_canonical(void){
 
 	for (unsigned site=n_sites-1; site>0; site--) {
-		sweep_from_left_at(site);
+		sweep_from_right_at(site);
 	}
 
 	Svd temp_svd(mps_matrices[0], ComputeThinU | ComputeThinV);
@@ -260,6 +260,58 @@ void Mps::make_right_canonical(void){
 	mps_matrices[0] = temp_v;
 
 }
+
+//Change storage for full mps from left-storage to right-storage
+void Mps::change_mps_storage_to_right(void){
+
+	for (unsigned site=0; site<n_sites; site++) {
+		mps_matrices[site] = left_storage_to_right(mps_matrices[site]);
+	}
+
+}
+
+//Change storage for full mps from right-storage to left-storage
+void Mps::change_mps_storage_to_left(void){
+
+	for (unsigned site=0; site<n_sites; site++) {
+		mps_matrices[site] = right_storage_to_left(mps_matrices[site]);
+	}
+
+}
+
+
+//Change a CanonMat of left storage form to right form
+template<typename Derived>
+Derived Mps::left_storage_to_right(const MatrixBase<Derived>& left_storage) {
+
+	unsigned blockrows = left_storage.rows()/hilbert_dim;
+	unsigned blockcols = left_storage.cols();
+	Derived right_storage(blockrows,blockcols*hilbert_dim);
+
+	for (unsigned k = 0; k < hilbert_dim; k++) {
+		right_storage.block(0, blockcols * k,  blockrows, blockcols) =
+				left_storage.block(k*blockrows, 0,  blockrows, blockcols);
+	}
+
+	return right_storage;
+}
+
+//Change a CanonMat of right storage form to left form
+template<typename Derived>
+Derived Mps::right_storage_to_left(const MatrixBase<Derived>& right_storage) {
+
+	unsigned blockrows = right_storage.rows();
+	unsigned blockcols = right_storage.cols()/hilbert_dim;
+	Derived left_storage(blockrows*hilbert_dim,blockcols);
+
+	for (unsigned k = 0; k < hilbert_dim; k++) {
+		left_storage.block(k*blockrows, 0,  blockrows, blockcols) =
+				right_storage.block(0, blockcols * k,  blockrows, blockcols);
+	}
+
+	return left_storage;
+}
+
 
 //Must template
 CanonMat Mps::return_matrix_at_site(unsigned site) {

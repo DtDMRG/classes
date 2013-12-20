@@ -153,7 +153,17 @@ cout<<pp.return_matrix_at_site(0)<<endl<<endl;
 cout<<pp.return_matrix_at_site(1)<<endl<<endl;
 cout<<pp.return_matrix_at_site(2)<<endl<<endl;
 
-pp.sweep_from_right_at(1);
+pp.change_mps_storage_to_right();
+cout<<"left to right storage"<<endl;
+
+
+cout<<"mps right storage"<<endl;
+cout<<pp.return_matrix_at_site(0)<<endl<<endl;
+cout<<pp.return_matrix_at_site(1)<<endl<<endl;
+cout<<pp.return_matrix_at_site(2)<<endl<<endl;
+
+//pp.sweep_from_right_at(1);
+pp.make_right_canonical();
 
 cout<<"mps after canonicalising"<<endl;
 cout<<pp.return_matrix_at_site(0)<<endl<<endl;
