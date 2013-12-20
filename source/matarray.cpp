@@ -14,6 +14,7 @@
 #include "matrixdefs.h"
 #include "mps.h"
 #include "qstate.h"
+#include "hushdebug.h"
 
 /* selected definitions from std*/
 #define complex std::complex<double>
@@ -82,7 +83,46 @@ public:
 };
 */
 
-int main(void) {
+int main( int argc, char* argv[] ) {
+
+	/*Split the code into parts so we each have our own effective mains
+	 * where we can run test code relevant to what we are developing
+	 * Feel free to add whatever you want
+	 * Just feed a the appropriate character to run to run your code
+	 *
+	 */
+
+	if (argc > 1) {
+
+		if (strcmp(argv[1],"h") == 0) {
+			HushDebug::hushmain();
+
+			return 0;
+		}
+
+		if (strcmp(argv[1],"h") == 0) {
+			//Sam debug
+
+			return 0;
+		}
+
+		if (strcmp(argv[1],"l") == 0) {
+			//Levi debug
+
+			return 0;
+		}
+
+
+	}
+
+
+	//cout<< "Hey here is number of the parameters you've entered" <<endl;
+	//cout<< argc <<endl;
+	//cout<< "and what they said" <<endl;
+	//cout<< argv[0] <<endl;
+	//cout<< argv[1] <<endl;
+
+
 
 	int Nsigma = 3;		//Quantum dimension of a site
 	int Ni = 3;			//Dimension for matrix indices i
@@ -153,7 +193,21 @@ cout<<pp.return_matrix_at_site(0)<<endl<<endl;
 cout<<pp.return_matrix_at_site(1)<<endl<<endl;
 cout<<pp.return_matrix_at_site(2)<<endl<<endl;
 
+<<<<<<< HEAD
 pp.sweep_from_left_at(1);
+=======
+pp.change_mps_storage_to_right();
+cout<<"left to right storage"<<endl;
+
+
+cout<<"mps right storage"<<endl;
+cout<<pp.return_matrix_at_site(0)<<endl<<endl;
+cout<<pp.return_matrix_at_site(1)<<endl<<endl;
+cout<<pp.return_matrix_at_site(2)<<endl<<endl;
+
+//pp.sweep_from_right_at(1);
+pp.make_right_canonical();
+>>>>>>> branch 'master' of https://github.com/DtDMRG/classes.git
 
 cout<<"mps after canonicalising"<<endl;
 cout<<pp.return_matrix_at_site(0)<<endl<<endl;

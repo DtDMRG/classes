@@ -76,9 +76,10 @@ public:
 	void make_right_canonical(void); //Make the matrix
 	void compress(unsigned);
 
+	//Change storage of an mps from left-storage to right
+	void change_mps_storage_to_right(void);
 
-
-
+	void change_mps_storage_to_left(void);
 
 	//Some functions for debugging
 	void return_matrix(unsigned,unsigned); //returns matrix at site and dim
@@ -94,9 +95,16 @@ public:
 	DerivedB leftcanonmult(const MatrixBase<DerivedA>& ,
 			const MatrixBase<DerivedB>&, unsigned, unsigned, unsigned);
 	//Multiplying canonical matrices for sweep from right
-		template<typename DerivedA, typename DerivedB>
-		DerivedB rightcanonmult(const MatrixBase<DerivedA>& ,
-				const MatrixBase<DerivedB>&, unsigned, unsigned, unsigned);
+	template<typename DerivedA, typename DerivedB>
+	DerivedB rightcanonmult(const MatrixBase<DerivedA>& ,
+			const MatrixBase<DerivedB>&, unsigned, unsigned, unsigned);
+
+	//Change from left to right storage for canonical matrices
+	template<typename Derived>
+	Derived left_storage_to_right(const MatrixBase<Derived>&);
+	//Change from left to right storage for canonical matrices
+	template<typename Derived>
+	Derived right_storage_to_left(const MatrixBase<Derived>&);
 
 
 };
