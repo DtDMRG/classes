@@ -7,18 +7,21 @@ CPP_SRCS += \
 ../source/matarray.cpp \
 ../source/mpo.cpp \
 ../source/mps.cpp \
+../source/qoperator.cpp \
 ../source/qstate.cpp 
 
 OBJS += \
 ./source/matarray.o \
 ./source/mpo.o \
 ./source/mps.o \
+./source/qoperator.o \
 ./source/qstate.o 
 
 CPP_DEPS += \
 ./source/matarray.d \
 ./source/mpo.d \
 ./source/mps.d \
+./source/qoperator.d \
 ./source/qstate.d 
 
 
