@@ -146,14 +146,14 @@ int main(void) {
 	//cout<<KK.matrixV()<<endl;
 
 cout << "making an mps object"<<endl;
-Mps pp(3,2,'i');
+Mps pp(3,1,'i');
 
 cout<<"mps before"<<endl;
 cout<<pp.return_matrix_at_site(0)<<endl<<endl;
 cout<<pp.return_matrix_at_site(1)<<endl<<endl;
 cout<<pp.return_matrix_at_site(2)<<endl<<endl;
 
-pp.sweep_from_right_at(1);
+pp.sweep_from_left_at(1);
 
 cout<<"mps after canonicalising"<<endl;
 cout<<pp.return_matrix_at_site(0)<<endl<<endl;
